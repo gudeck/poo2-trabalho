@@ -244,6 +244,9 @@
         </Component>
         <Component class="javax.swing.JButton" name="btnCadastrarCliente">
           <Properties>
+            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+              <Image iconType="3" name="/imagens/Ic_add_circle_outline_48px.svg.png"/>
+            </Property>
             <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>

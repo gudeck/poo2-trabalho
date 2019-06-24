@@ -77,6 +77,7 @@ public class JDGCadastroProduto extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cadastro de Produto");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentShown(java.awt.event.ComponentEvent evt) {
                 formComponentShown(evt);
@@ -179,6 +180,7 @@ public class JDGCadastroProduto extends javax.swing.JDialog {
 
         jLabel5.setText("Categoria");
 
+        btnCadastrarCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Ic_add_circle_outline_48px.svg.png"))); // NOI18N
         btnCadastrarCategoria.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarCategoriaActionPerformed(evt);

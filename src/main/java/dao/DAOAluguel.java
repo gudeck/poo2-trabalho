@@ -82,7 +82,10 @@ public class DAOAluguel extends GenericDAO {
             CriteriaQuery<Aluguel> criteria = builder.createQuery(Aluguel.class);
             Root<Aluguel> root = criteria.from(Aluguel.class);
 
-            criteria.where(builder.equal(root.get("estado"), estado));
+            criteria.where(builder.and(
+                    builder.equal(root.get("estado"), estado),
+                    builder.equal(root.get("cliente"), cliente)
+            ));
 
             lista = sessao.createQuery(criteria).getResultList();
 

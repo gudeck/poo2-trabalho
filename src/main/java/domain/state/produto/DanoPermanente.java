@@ -34,12 +34,12 @@ public class DanoPermanente extends EstadoProduto {
 
     @Override
     public EstadoProduto setEmLoja() {
-        return EmLoja.getInstance();
+        return this;
     }
 
     @Override
     public EstadoProduto setEmManutencao() {
-        return EmManutencao.getInstance();
+        return this;
     }
 
     private static class NewSingletonHolder {

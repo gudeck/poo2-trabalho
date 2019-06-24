@@ -31,6 +31,7 @@ public class JFRPrincipal extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mnuiCadastroCliente = new javax.swing.JMenuItem();
@@ -59,7 +60,12 @@ public class JFRPrincipal extends javax.swing.JFrame {
         setTitle("Anarriê");
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
+        setSize(new java.awt.Dimension(562, 280));
         getContentPane().setLayout(null);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Sem título.png"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, 0, 560, 280);
 
         jMenu1.setText("Cadastro");
 
@@ -161,6 +167,7 @@ public class JFRPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_mnuiCadastroProdutoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
