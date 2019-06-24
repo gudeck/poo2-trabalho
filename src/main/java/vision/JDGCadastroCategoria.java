@@ -204,6 +204,9 @@ public class JDGCadastroCategoria extends javax.swing.JDialog {
 
                 controladorVisao.getControleDominio().categoriaCreate(nome, descricao);
                 JOptionPane.showMessageDialog(this, "Categoria cadastrada com sucesso!");
+                
+                btnAlterar.setEnabled(false);
+                btnCadastrar.setEnabled(true);
 
             } else {
 

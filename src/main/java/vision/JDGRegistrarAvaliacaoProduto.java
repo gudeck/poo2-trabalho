@@ -108,6 +108,7 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
         });
         jPanel1.add(rdbEmDanoPermanente);
 
+        grpEstadoProduto.add(rdbEmAluguel);
         rdbEmAluguel.setText("EmAluguel");
         rdbEmAluguel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

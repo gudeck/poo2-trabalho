@@ -187,6 +187,7 @@ public class JDGCadastroProduto extends javax.swing.JDialog {
 
         btnAlterar.setMnemonic('A');
         btnAlterar.setText("Alterar");
+        btnAlterar.setEnabled(false);
         btnAlterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCadastrarActionPerformed(evt);

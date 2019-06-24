@@ -78,13 +78,6 @@ public class ControleVisao {
         return buscaCliente.getObjetoCliente();
     }
 
-    public void consultaCliente() {
-        JDGConsultaCliente consultaCliente = JDGConsultaCliente.getInstance(janelaPrincipal, true, this);
-        consultaCliente.setLocationRelativeTo(null);
-        consultaCliente.setResizable(false);
-        consultaCliente.setVisible(true);
-    }
-
     public void cadastroCategoria() {
         JDGCadastroCategoria cadastroCategoria = JDGCadastroCategoria.getInstance(janelaPrincipal, true, this);
         cadastroCategoria.setLocationRelativeTo(null);

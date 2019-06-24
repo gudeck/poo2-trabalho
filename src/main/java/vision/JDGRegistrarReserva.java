@@ -256,7 +256,6 @@ public class JDGRegistrarReserva extends javax.swing.JDialog {
         tabela.setRowCount(0);
 
         tblRegistrarReserva.setEnabled(false);
-        btnBuscarCliente.setEnabled(false);
         btnReservar.setEnabled(false);
         btnCadastrarCliente.setEnabled(false);
         lblValor.setText("0,0");

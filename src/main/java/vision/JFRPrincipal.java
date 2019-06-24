@@ -36,8 +36,6 @@ public class JFRPrincipal extends javax.swing.JFrame {
         mnuiCadastroCliente = new javax.swing.JMenuItem();
         mnuiCadastroCategoria = new javax.swing.JMenuItem();
         mnuiCadastroProduto = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
-        mnuiConsultaCLiente = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         mniRegistrarReserva = new javax.swing.JMenuItem();
         mniRegistrarRetirada = new javax.swing.JMenuItem();
@@ -91,18 +89,6 @@ public class JFRPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Consulta");
-
-        mnuiConsultaCLiente.setText("Cliente");
-        mnuiConsultaCLiente.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuiConsultaCLienteActionPerformed(evt);
-            }
-        });
-        jMenu2.add(mnuiConsultaCLiente);
-
-        jMenuBar1.add(jMenu2);
-
         jMenu3.setText("Registros");
 
         mniRegistrarReserva.setText("Reserva");
@@ -150,10 +136,6 @@ public class JFRPrincipal extends javax.swing.JFrame {
         controladorVisao.cadastroCliente();
     }//GEN-LAST:event_mnuiCadastroClienteActionPerformed
 
-    private void mnuiConsultaCLienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiConsultaCLienteActionPerformed
-        controladorVisao.consultaCliente();
-    }//GEN-LAST:event_mnuiConsultaCLienteActionPerformed
-
     private void mnuiCadastroCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiCadastroCategoriaActionPerformed
         controladorVisao.cadastroCategoria();
     }//GEN-LAST:event_mnuiCadastroCategoriaActionPerformed
@@ -180,7 +162,6 @@ public class JFRPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -192,6 +173,5 @@ public class JFRPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuiCadastroCategoria;
     private javax.swing.JMenuItem mnuiCadastroCliente;
     private javax.swing.JMenuItem mnuiCadastroProduto;
-    private javax.swing.JMenuItem mnuiConsultaCLiente;
     // End of variables declaration//GEN-END:variables
 }
