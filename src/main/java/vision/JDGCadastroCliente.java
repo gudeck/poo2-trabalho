@@ -18,7 +18,7 @@ import javax.swing.JOptionPane;
  */
 public class JDGCadastroCliente extends javax.swing.JDialog {
 
-    private static JDGCadastroCliente uniqueInstance;
+    private static JDGCadastroCliente UNIQUEINSTANCE;
 
     private final ControleVisao controladorVisao;
     private Cliente objetoCliente;
@@ -31,12 +31,12 @@ public class JDGCadastroCliente extends javax.swing.JDialog {
     }
 
     public static synchronized JDGCadastroCliente getInstance(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JDGCadastroCliente(parent, modal, controlador);
+        if (UNIQUEINSTANCE == null) {
+            UNIQUEINSTANCE = new JDGCadastroCliente(parent, modal, controlador);
         }
 
-        uniqueInstance.setModal(modal);
-        return uniqueInstance;
+        UNIQUEINSTANCE.setModal(modal);
+        return UNIQUEINSTANCE;
     }
 
     /**

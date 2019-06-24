@@ -22,7 +22,7 @@ public class GenericDAO {
 
         try {
             // Abrir a SESSÃO
-            sessao = ConexaoHibernate.getSessionFactory().openSession();
+            sessao = ConexaoHibernate.getSESSIONFACTORY().openSession();
             sessao.getTransaction().begin();
 
             sessao.saveOrUpdate(obj);
@@ -47,7 +47,7 @@ public class GenericDAO {
 
         try {
             // Abrir a SESSÃO
-            sessao = ConexaoHibernate.getSessionFactory().openSession();
+            sessao = ConexaoHibernate.getSESSIONFACTORY().openSession();
             sessao.getTransaction().begin();
 
             CriteriaQuery<Class> criteria = sessao.getCriteriaBuilder().createQuery(classe);
@@ -74,7 +74,7 @@ public class GenericDAO {
 
         try {
             // Abrir a SESSÃO
-            sessao = ConexaoHibernate.getSessionFactory().openSession();
+            sessao = ConexaoHibernate.getSESSIONFACTORY().openSession();
             sessao.getTransaction().begin();
 
             sessao.delete(obj);

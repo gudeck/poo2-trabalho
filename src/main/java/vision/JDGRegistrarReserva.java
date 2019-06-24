@@ -8,6 +8,8 @@ package vision;
 import control.ControleVisao;
 import domain.Cliente;
 import domain.Produto;
+import domain.state.aluguel.Fechado;
+import domain.state.produto.EmLoja;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +22,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JDGRegistrarReserva extends javax.swing.JDialog {
 
-    private static JDGRegistrarReserva uniqueInstance;
+    private static JDGRegistrarReserva UNIQUEINSTANCE;
 
     private final ControleVisao controladorVisao;
-    private List resultadoBusca;
+    private List<Produto> resultadoBusca;
     private Cliente cliente;
 
     private JDGRegistrarReserva(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
@@ -33,12 +35,12 @@ public class JDGRegistrarReserva extends javax.swing.JDialog {
     }
 
     public static synchronized JDGRegistrarReserva getInstance(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JDGRegistrarReserva(parent, modal, controlador);
+        if (UNIQUEINSTANCE == null) {
+            UNIQUEINSTANCE = new JDGRegistrarReserva(parent, modal, controlador);
         }
 
-        uniqueInstance.setModal(modal);
-        return uniqueInstance;
+        UNIQUEINSTANCE.setModal(modal);
+        return UNIQUEINSTANCE;
     }
 
     /**
@@ -291,11 +293,12 @@ public class JDGRegistrarReserva extends javax.swing.JDialog {
 
         if (posicoes.length != 0) {
             try {
-                controladorVisao.getControleDominio().reservaCreate(listaProdutos, cliente,
+                controladorVisao.getControleDominio().aluguelCreate(listaProdutos, cliente,
                         ftxtDataRetirada.getText(), ftxtDataDevolucao.getText(), valorTotal);
                 limparTela();
                 atualizaTabela();
                 JOptionPane.showMessageDialog(this, "Reserva registrada com sucesso.");
+                cliente = null;
             } catch (ParseException ex) {
                 JOptionPane.showMessageDialog(this, "Insira uma data válida.");
             }
@@ -314,24 +317,24 @@ public class JDGRegistrarReserva extends javax.swing.JDialog {
 
         tabela.setRowCount(0);
 
-        resultadoBusca = controladorVisao.getControleDominio().produtoReadEmLoja();
+        resultadoBusca = controladorVisao.getControleDominio().produtoReadEstado(EmLoja.getInstance());
 
-        if (!resultadoBusca.isEmpty()) {
+        if (!resultadoBusca.isEmpty() || resultadoBusca != null) {
             tblRegistrarReserva.setEnabled(true);
             btnCadastrarCliente.setEnabled(true);
-            for (int i = 0; i < resultadoBusca.size(); i++) {
-                tabela.addRow(new Object[]{((Produto) resultadoBusca.get(i)).getCategoria(),
-                    ((Produto) resultadoBusca.get(i)).getNome(),
-                    ((Produto) resultadoBusca.get(i)).getTamanho()});
-            }
+            resultadoBusca.forEach((p) -> {
+                tabela.addRow(new Object[]{p.getCategoria(),
+                    p.getNome(),
+                    p.getTamanho()});
+            });
         }
     }
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
+        cliente = null;
         cliente = controladorVisao.buscaCliente();
-        if (controladorVisao.getControleDominio().aluguelReadIndireto(cliente, "fechado").size() >= 1) {
+        if (controladorVisao.getControleDominio().aluguelReadIndireto(cliente, Fechado.getInstance()).size() > 0) {
             JOptionPane.showMessageDialog(this, "O cliente selecionado já possui um aluguel em aberto / a ser retirado.");
-            cliente = null;
         } else {
             txtNomeCliente.setText(cliente.toString());
             btnReservar.setEnabled(true);
@@ -361,6 +364,7 @@ public class JDGRegistrarReserva extends javax.swing.JDialog {
         ftxtDataRetirada.setText("");
         txtNomeCliente.setText("");
         cliente = null;
+        lblValor.setText("00,00");
 
     }
 }

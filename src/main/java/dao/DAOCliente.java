@@ -5,48 +5,62 @@
  */
 package dao;
 
+import domain.Cliente;
+import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+
 /**
  *
  * @author gudeck
  */
 public class DAOCliente extends GenericDAO {
 
-    private static DAOCliente uniqueInstance;
+    private static DAOCliente UNIQUEINSTANCE;
 
     private DAOCliente() {
     }
 
     public static synchronized DAOCliente getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new DAOCliente();
+        if (UNIQUEINSTANCE == null) {
+            UNIQUEINSTANCE = new DAOCliente();
         }
 
-        return uniqueInstance;
+        return UNIQUEINSTANCE;
     }
 
-    /*
-   
-    public ResultSet read(String nome) throws SQLException {
+    public List<Cliente> readNome(String nome) {
+        List lista = null;
+        Session sessao = null;
 
-        ResultSet result;
-        sql = "select * from cliente where nome like '" + nome + "%'";
-        statement = conexao.prepareStatement(sql);
-        result = statement.executeQuery();
-        return result;
-    }
+        try {
+            // Abrir a SESSÃO
+            sessao = ConexaoHibernate.getSESSIONFACTORY().openSession();
+            sessao.getTransaction().begin();
 
-    public int cpfConsulta(String cpf) throws SQLException{
+            CriteriaBuilder builder = sessao.getCriteriaBuilder();
 
-        ResultSet result;
-        sql = "select count(*) from cliente where cpf like '" + cpf + "'";
-        statement = conexao.prepareStatement(sql);
-        result = statement.executeQuery(sql);
-        if (result.next()) {
-            return result.getInt(1);
-        } else {
-            return -1;
+            CriteriaQuery<Cliente> criteria = builder.createQuery(Cliente.class);
+            Root<Cliente> root = criteria.from(Cliente.class);
+            criteria.select(root);
+            criteria.where(builder.like(root.get("nome"), nome + "%"));
+
+            lista = sessao.createQuery(criteria).getResultList();
+
+            sessao.getTransaction().commit();
+            sessao.close();
+        } catch (HibernateException ex) {
+            if (sessao != null) {
+                sessao.getTransaction().rollback();
+                sessao.close();
+            }
+
+            throw new HibernateException(ex);
         }
-
+        return lista;
     }
-     */
+
 }

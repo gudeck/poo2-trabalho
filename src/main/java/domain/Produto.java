@@ -7,9 +7,13 @@ package domain;
 
 import domain.state.produto.EstadoProduto;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -48,14 +52,8 @@ public class Produto implements Serializable {
     private boolean danoPermanente;
 
     @ManyToOne
-    @JoinColumn(name = "codCategoria")
+    @JoinColumn(name = "codCategoria", nullable = false)
     private Categoria categoria;
-
-    @OneToMany(mappedBy = "chaveComposta.produto")
-    List<ProdutoAlugado> listaProdutosAlugados = new ArrayList<>();
-
-    @OneToMany(mappedBy = "produto")
-    List<Manutencao> listaManutencao = new ArrayList<>();
 
     @Override
     public String toString() {
@@ -132,22 +130,6 @@ public class Produto implements Serializable {
 
     public void setCategoria(Categoria categoria) {
         this.categoria = categoria;
-    }
-
-    public List<ProdutoAlugado> getListaProdutosAlugados() {
-        return listaProdutosAlugados;
-    }
-
-    public void setListaProdutosAlugados(List<ProdutoAlugado> listaProdutosAlugados) {
-        this.listaProdutosAlugados = listaProdutosAlugados;
-    }
-
-    public List<Manutencao> getListaManutencao() {
-        return listaManutencao;
-    }
-
-    public void setListaManutencao(List<Manutencao> listaManutencao) {
-        this.listaManutencao = listaManutencao;
     }
 
 }

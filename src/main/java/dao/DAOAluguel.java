@@ -7,8 +7,11 @@ package dao;
 
 import domain.Aluguel;
 import domain.Cliente;
-import domain.Produto;
+import domain.state.aluguel.EstadoAluguel;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -18,79 +21,39 @@ import org.hibernate.Session;
  */
 public class DAOAluguel extends GenericDAO {
 
-    private static DAOAluguel uniqueInstance;
+    private static DAOAluguel UNIQUEINSTANCE;
 
     private DAOAluguel() {
     }
 
     public static synchronized DAOAluguel getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new DAOAluguel();
+        if (UNIQUEINSTANCE == null) {
+            UNIQUEINSTANCE = new DAOAluguel();
         }
 
-        return uniqueInstance;
+        return UNIQUEINSTANCE;
     }
 
-    public List<Produto> readRoupas(Cliente cliente, Aluguel aluguel) {
-
-        List<Produto> lista = null;
-        Session sessao = null;
-
-        try {
-            // Abrir a SESSÃO
-            sessao = ConexaoHibernate.getSessionFactory().openSession();
-            sessao.getTransaction().begin();
-
-            lista = sessao.createNativeQuery(
-                    "select "
-                    + "p.* "
-                    + "from "
-                    + "anarrie.aluguel a "
-                    + "inner join "
-                    + "anarrie.cliente c on a.codCliente = c.codCliente "
-                    + "and c.codCliente = " + cliente.getCodCliente() + " "
-                    + "and a.codAluguel = " + aluguel.getCodAluguel() + " "
-                    + "inner join "
-                    + "anarrie.produtoalugado pa on a.codAluguel = pa.codAluguel "
-                    + "inner join "
-                    + "anarrie.produto p on pa.codProduto = p.codProduto;",
-                    Produto.class).list();
-
-            sessao.getTransaction().commit();
-            sessao.close();
-        } catch (HibernateException ex) {
-            if (sessao != null) {
-                sessao.getTransaction().rollback();
-                sessao.close();
-            }
-
-            throw new HibernateException(ex);
-        }
-        return lista;
-
-    }
-
-    public List<Aluguel> readAluguelEstadoIndireto(Cliente cliente, String estado) {
+    public List<Aluguel> readEstadoIndireto(Cliente cliente, EstadoAluguel estado) {
         List lista = null;
         Session sessao = null;
 
         try {
             // Abrir a SESSÃO
-            sessao = ConexaoHibernate.getSessionFactory().openSession();
+            sessao = ConexaoHibernate.getSESSIONFACTORY().openSession();
             sessao.getTransaction().begin();
 
-            lista = sessao.createNativeQuery(
-                    "select "
-                    + "a.* "
-                    + "from "
-                    + "anarrie.aluguel a "
-                    + "inner join "
-                    + "anarrie.cliente c on a.codCliente = c.codCliente "
-                    + "and c.codCliente = " + cliente.getCodCliente() + " "
-                    + "inner join "
-                    + "anarrie.estadoaluguel ea on ea.codEstado = a.codEstado "
-                    + "and ea.DTYPE not like '%" + estado + "%';",
-                    Aluguel.class).list();
+            CriteriaBuilder builder = sessao.getCriteriaBuilder();
+
+            CriteriaQuery<Aluguel> criteria = builder.createQuery(Aluguel.class);
+            Root<Aluguel> root = criteria.from(Aluguel.class);
+
+            criteria.where(builder.and(
+                    builder.equal(root.get("cliente"), cliente)),
+                    builder.not(builder.equal(root.get("estado"), estado)
+                    ));
+
+            lista = sessao.createQuery(criteria).getResultList();
 
             sessao.getTransaction().commit();
             sessao.close();
@@ -105,27 +68,23 @@ public class DAOAluguel extends GenericDAO {
         return lista;
     }
 
-    public Aluguel readAluguelEstadoDireto(Cliente cliente, String estado) {
+    public Aluguel readEstadoDireto(Cliente cliente, EstadoAluguel estado) {
         List lista = null;
         Session sessao = null;
 
         try {
             // Abrir a SESSÃO
-            sessao = ConexaoHibernate.getSessionFactory().openSession();
+            sessao = ConexaoHibernate.getSESSIONFACTORY().openSession();
             sessao.getTransaction().begin();
 
-            lista = sessao.createNativeQuery(
-                    "select "
-                    + "a.* "
-                    + "from "
-                    + "anarrie.aluguel a "
-                    + "inner join "
-                    + "anarrie.cliente c on a.codCliente = c.codCliente "
-                    + "and c.codCliente = " + cliente.getCodCliente() + " "
-                    + "inner join "
-                    + "anarrie.estadoaluguel ea on ea.codEstado = a.codEstado "
-                    + "and ea.DTYPE like '%" + estado + "%';",
-                    Aluguel.class).list();
+            CriteriaBuilder builder = sessao.getCriteriaBuilder();
+
+            CriteriaQuery<Aluguel> criteria = builder.createQuery(Aluguel.class);
+            Root<Aluguel> root = criteria.from(Aluguel.class);
+
+            criteria.where(builder.equal(root.get("estado"), estado));
+
+            lista = sessao.createQuery(criteria).getResultList();
 
             sessao.getTransaction().commit();
             sessao.close();

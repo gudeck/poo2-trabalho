@@ -13,9 +13,7 @@
         <mapping class="domain.Aluguel"/>
         <mapping class="domain.Categoria"/>
         <mapping class="domain.Cliente"/>
-        <mapping class="domain.Manutencao"/>
         <mapping class="domain.Produto"/>
-        <mapping class="domain.ProdutoAlugado"/>
         
         <mapping class="domain.state.produto.DanoPermanente"/>
         <mapping class="domain.state.produto.EmAluguel"/>

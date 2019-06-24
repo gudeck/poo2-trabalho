@@ -5,7 +5,6 @@
  */
 package domain.state.aluguel;
 
-import domain.state.produto.*;
 import javax.persistence.Entity;
 
 /**

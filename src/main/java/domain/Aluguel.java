@@ -9,8 +9,17 @@ import domain.state.aluguel.EstadoAluguel;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.*;
-import org.hibernate.annotations.Cascade;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 /**
  *
@@ -46,18 +55,14 @@ public class Aluguel implements Serializable {
     private EstadoAluguel estado;
 
     @Column(nullable = false)
-    private String pessoaRetirou;
-
-    @Column(nullable = false)
     private Double valorPago;
 
     @ManyToOne
-    @JoinColumn(name = "codCliente")
+    @JoinColumn(name = "codCliente", nullable = false)
     private Cliente cliente;
 
-    @OneToMany(mappedBy = "chaveComposta.aluguel", fetch = FetchType.EAGER)
-    @Cascade(org.hibernate.annotations.CascadeType.ALL)
-    private List<ProdutoAlugado> produtosAlugados;
+    @ManyToMany(targetEntity = Produto.class, fetch = FetchType.EAGER)
+    private List<Produto> produtosAlugados;
 
     public Integer getCodAluguel() {
         return codAluguel;
@@ -107,14 +112,6 @@ public class Aluguel implements Serializable {
         this.estado = estado;
     }
 
-    public String getPessoaRetirou() {
-        return pessoaRetirou;
-    }
-
-    public void setPessoaRetirou(String pessoaRetirou) {
-        this.pessoaRetirou = pessoaRetirou;
-    }
-
     public Double getValorPago() {
         return valorPago;
     }
@@ -131,11 +128,11 @@ public class Aluguel implements Serializable {
         this.cliente = cliente;
     }
 
-    public List<ProdutoAlugado> getProdutosAlugados() {
+    public List<Produto> getProdutosAlugados() {
         return produtosAlugados;
     }
 
-    public void setProdutosAlugados(List<ProdutoAlugado> produtosAlugados) {
+    public void setProdutosAlugados(List<Produto> produtosAlugados) {
         this.produtosAlugados = produtosAlugados;
     }
 

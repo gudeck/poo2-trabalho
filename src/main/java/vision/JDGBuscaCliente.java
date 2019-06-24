@@ -7,6 +7,7 @@ package vision;
 
 import control.ControleVisao;
 import domain.Cliente;
+import domain.state.aluguel.Fechado;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -17,11 +18,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JDGBuscaCliente extends javax.swing.JDialog {
 
-    private static JDGBuscaCliente uniqueInstance;
+    private static JDGBuscaCliente UNIQUEINSTANCE;
 
     private Cliente objetoCliente;
     private final ControleVisao controladorVisao;
-    private List resultadoBusca;
+    private List<Cliente> resultadoBusca;
 
     private JDGBuscaCliente(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
         super(parent, modal);
@@ -31,12 +32,12 @@ public class JDGBuscaCliente extends javax.swing.JDialog {
     }
 
     public static synchronized JDGBuscaCliente getInstance(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JDGBuscaCliente(parent, modal, controlador);
+        if (UNIQUEINSTANCE == null) {
+            UNIQUEINSTANCE = new JDGBuscaCliente(parent, modal, controlador);
         }
 
-        uniqueInstance.setModal(modal);
-        return uniqueInstance;
+        UNIQUEINSTANCE.setModal(modal);
+        return UNIQUEINSTANCE;
     }
 
     /**
@@ -167,16 +168,25 @@ public class JDGBuscaCliente extends javax.swing.JDialog {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
+        objetoCliente = null;
+
         String nome = txtNome.getText();
         DefaultTableModel tabela = (DefaultTableModel) tblNome.getModel();
+        tabela.setRowCount(0);
 
         if (nome.isEmpty()) {
-            tabela.setRowCount(0);
             resultadoBusca = controladorVisao.getControleDominio().clienteReadAll();
-            for (int i = 0; i < resultadoBusca.size(); i++) {
-                tabela.addRow(new Object[]{((Cliente) resultadoBusca.get(i)).getNome(), ((Cliente) resultadoBusca.get(i)).getCpf()});
-            }
+        } else {
+            resultadoBusca = controladorVisao.getControleDominio().clienteReadNome(nome);
         }
+
+        resultadoBusca.forEach((c) -> {
+            tabela.addRow(new Object[]{
+                c.getNome(),
+                c.getCpf()
+            });
+        });
+
         txtNome.setText("");
         txtNome.requestFocus();
 
@@ -208,10 +218,13 @@ public class JDGBuscaCliente extends javax.swing.JDialog {
         DefaultTableModel tabela = (DefaultTableModel) tblNome.getModel();
 
         if (tblNome.getSelectedRow() > -1) {
-            controladorVisao.getControleDominio().clienteDelete(((Cliente) resultadoBusca.get(tblNome.getSelectedRow())));
-            tabela.removeRow(tblNome.getSelectedRow());
-            JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Delete", JOptionPane.INFORMATION_MESSAGE);
-
+            if (controladorVisao.getControleDominio().aluguelReadIndireto(objetoCliente, Fechado.getInstance()).size() > 0) {
+                JOptionPane.showMessageDialog(this, "O cliente selecionado não pode ser excluído por conter pendências.");
+            } else {
+                controladorVisao.getControleDominio().clienteDelete(((Cliente) resultadoBusca.get(tblNome.getSelectedRow())));
+                tabela.removeRow(tblNome.getSelectedRow());
+                JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Delete", JOptionPane.INFORMATION_MESSAGE);
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Selecione ao menos um registro da tabela!", "ERRO", JOptionPane.ERROR_MESSAGE);
             txtNome.requestFocus();

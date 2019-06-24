@@ -5,9 +5,17 @@
  */
 package control;
 
-import dao.*;
-import domain.*;
+import dao.DAOAluguel;
+import dao.DAOCategoria;
+import dao.DAOCliente;
+import dao.DAOProduto;
+import dao.GenericDAO;
+import domain.Aluguel;
+import domain.Categoria;
+import domain.Cliente;
+import domain.Produto;
 import domain.state.aluguel.EmAberto;
+import domain.state.aluguel.EstadoAluguel;
 import domain.state.aluguel.Fechado;
 import domain.state.aluguel.NaoRetirado;
 import domain.state.produto.DanoPermanente;
@@ -16,7 +24,6 @@ import domain.state.produto.EmLoja;
 import domain.state.produto.EmManutencao;
 import domain.state.produto.EstadoProduto;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -26,12 +33,14 @@ import java.util.List;
  */
 public class ControleDominio {
 
-    private static final ControleDominio uniqueInstance = new ControleDominio();
+    private static final ControleDominio UNIQUEINSTANCE = new ControleDominio();
     private final GenericDAO genericDao;
 
     private ControleDominio() {
-        dao.ConexaoHibernate.getSessionFactory();
+
+        dao.ConexaoHibernate.getSESSIONFACTORY();
         genericDao = new GenericDAO();
+
         genericDao.create_update(EmAberto.getInstance());
         genericDao.create_update(Fechado.getInstance());
         genericDao.create_update(NaoRetirado.getInstance());
@@ -43,7 +52,11 @@ public class ControleDominio {
     }
 
     public static ControleDominio getInstance() {
-        return uniqueInstance;
+        return UNIQUEINSTANCE;
+    }
+
+    public GenericDAO getGenericDao() {
+        return genericDao;
     }
 
     public void clienteCreate(String nome, String endereco, String email, String cpf, String dataNascimento, String telefone, char sexo) throws ParseException {
@@ -61,12 +74,11 @@ public class ControleDominio {
         cliente.setTelefone(telefone);
         cliente.setSexo(sexo);
 
-        DAOCliente.getInstance().create_update(cliente);
-
+        genericDao.create_update(cliente);
     }
 
     public List<Cliente> clienteReadAll() {
-        return DAOCliente.getInstance().read(Cliente.class);
+        return genericDao.read(Cliente.class);
     }
 
     public void clienteUpdate(int codigo, String nome, String endereco, String email, String cpf, String dataNascimento, String telefone, char sexo) throws ParseException {
@@ -85,14 +97,16 @@ public class ControleDominio {
         cliente.setTelefone(telefone);
         cliente.setSexo(sexo);
 
-        DAOCliente.getInstance().create_update(cliente);
-
+        genericDao.create_update(cliente);
     }
 
     public void clienteDelete(Cliente cliente) {
 
-        DAOCliente.getInstance().delete(cliente);
+        genericDao.delete(cliente);
+    }
 
+    public List<Cliente> clienteReadNome(String nome) {
+        return DAOCliente.getInstance().readNome(nome);
     }
 
     public void categoriaCreate(String nome, String descricao) {
@@ -102,14 +116,11 @@ public class ControleDominio {
         categoria.setNome(nome);
         categoria.setDescricao(descricao);
 
-        DAOCategoria.getInstance().create_update(categoria);
-
+        genericDao.create_update(categoria);
     }
 
     public List<Categoria> categoriaReadAll() {
-
-        return DAOCategoria.getInstance().read(Categoria.class);
-
+        return genericDao.read(Categoria.class);
     }
 
     public void categoriaUpdate(int codigo, String nome, String descricao) {
@@ -120,14 +131,15 @@ public class ControleDominio {
         categoria.setNome(nome);
         categoria.setDescricao(descricao);
 
-        DAOCategoria.getInstance().create_update(categoria);
-
+        genericDao.create_update(categoria);
     }
 
     public void categoriaDelete(Categoria categoria) {
+        genericDao.delete(categoria);
+    }
 
-        DAOCategoria.getInstance().delete(categoria);
-
+    public List<Categoria> categoriaReadNome(String nome) {
+        return DAOCategoria.getInstance().readNome(nome);
     }
 
     public void produtoCreate(String nome, Double diaria, Double danoPermanente, Categoria categoria, String tamanho, String descricao) {
@@ -141,20 +153,11 @@ public class ControleDominio {
         produto.setDescricao(descricao);
         produto.setEstado(EmLoja.getInstance());
 
-        DAOProduto.getInstance().create_update(produto);
-
+        genericDao.create_update(produto);
     }
 
     public List<Produto> produtoReadAll() {
-        return DAOProduto.getInstance().read(Produto.class);
-    }
-
-    public List<Produto> produtoReadEmLoja() {
-        return DAOProduto.getInstance().readEmLoja();
-    }
-
-    public List<Produto> produtoReadEmManutencao() {
-        return DAOProduto.getInstance().readEmManutencao();
+        return genericDao.read(Produto.class);
     }
 
     public void produtoUpdate(int codProduto, String nome, Double diaria, Double danoPermanente, Categoria categoria, String tamanho, String descricao, EstadoProduto estado) {
@@ -169,21 +172,31 @@ public class ControleDominio {
         produto.setDescricao(descricao);
         produto.setEstado(estado);
 
-        DAOProduto.getInstance().create_update(produto);
+        genericDao.create_update(produto);
+    }
 
+    public void produtoUpdate(Produto produto) {
+        genericDao.create_update(produto);
     }
 
     public void produtoDelete(Produto produto) {
-
-        DAOProduto.getInstance().delete(produto);
-
+        genericDao.delete(produto);
     }
 
-    public GenericDAO getGenericDao() {
-        return genericDao;
+    public List<Produto> produtoReadEstado(EstadoProduto estado) {
+        return DAOProduto.getInstance().readEstado(estado);
     }
 
-    public void reservaCreate(List<Produto> listaProdutos, Cliente cliente, String dataRetirada, String dataDevolucao, String valorTotal) throws ParseException {
+    public List<Produto> produtoReadTamanhoCategoria(String tamanho, Categoria categoria) {
+        return DAOProduto.getInstance().readTamanhoCategoria(tamanho, categoria);
+    }
+
+    public List<Produto> produtoReadCategoria(Categoria categoria) {
+        return DAOProduto.getInstance().readCategoria(categoria);
+    }
+
+    public void aluguelCreate(List<Produto> listaProdutos, Cliente cliente, String dataRetirada, String dataDevolucao, String valorTotal) throws ParseException {
+
         Date data = new Date();
         Aluguel aluguel = new Aluguel();
 
@@ -191,55 +204,35 @@ public class ControleDominio {
         aluguel.setDataDevolucao(MetodosUteis.stringTOjavaDate(dataDevolucao));
         aluguel.setDataReserva(data);
         aluguel.setDataRetirada(MetodosUteis.stringTOjavaDate(dataRetirada));
-        aluguel.setPessoaRetirou("Não retirado.");
         aluguel.setValorPago(Double.valueOf(valorTotal) / 2);
         aluguel.setValorTotal(Double.valueOf(valorTotal));
         aluguel.setEstado(NaoRetirado.getInstance());
 
-        List<ProdutoAlugado> produtosAluguel = new ArrayList();
-        ProdutoAlugado produtoAlugado;
-
-        for (Produto p : listaProdutos) {
-
+        listaProdutos.forEach((p) -> {
             p.setEstado(p.getEstado().setEmAluguel());
-            DAOProduto.getInstance().create_update(p);
-        }
+            genericDao.create_update(p);
+        });
 
-        for (Produto p : listaProdutos) {
-            produtoAlugado = new ProdutoAlugado();
-            produtoAlugado.setProdutoAlugado(aluguel, p);
-            produtosAluguel.add(produtoAlugado);
-        }
+        aluguel.setProdutosAlugados(listaProdutos);
 
-        aluguel.setProdutosAlugados(produtosAluguel);
-
-        DAOProduto.getInstance().create_update(aluguel);
-
-    }
-
-    public List<Produto> aluguelReadRoupas(Cliente cliente, Aluguel aluguel) {
-        return DAOAluguel.getInstance().readRoupas(cliente, aluguel);
-    }
-
-    public List<Aluguel> aluguelReadIndireto(Cliente cliente, String estado) {
-        return DAOAluguel.getInstance().readAluguelEstadoIndireto(cliente, estado);
-    }
-
-    public Aluguel aluguelReadDireto(Cliente cliente, String estado) {
-        return DAOAluguel.getInstance().readAluguelEstadoDireto(cliente, estado);
+        genericDao.create_update(aluguel);
     }
 
     public void aluguelUpdate(Aluguel aluguel) {
 
         aluguel.getProdutosAlugados().forEach((pa) -> {
-            genericDao.create_update(pa.getProduto());
+            genericDao.create_update(pa);
         });
-        DAOAluguel.getInstance().create_update(aluguel);
 
+        genericDao.create_update(aluguel);
     }
 
-    public List<Produto> produtoReadTamanhoCategoria(String tamanho, Categoria categoria) {
-        return DAOProduto.getInstance().readTamanhoCategoria(tamanho, categoria);
+    public List<Aluguel> aluguelReadIndireto(Cliente cliente, EstadoAluguel estado) {
+        return DAOAluguel.getInstance().readEstadoIndireto(cliente, estado);
+    }
+
+    public Aluguel aluguelReadDireto(Cliente cliente, EstadoAluguel estado) {
+        return DAOAluguel.getInstance().readEstadoDireto(cliente, estado);
     }
 
 }

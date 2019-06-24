@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
  */
 public class JDGCadastroCategoria extends javax.swing.JDialog {
 
-    private static JDGCadastroCategoria uniqueInstance;
+    private static JDGCadastroCategoria UNIQUEINSTANCE;
     private Categoria objetoCategoria;
 
     private final ControleVisao controladorVisao;
@@ -29,12 +29,12 @@ public class JDGCadastroCategoria extends javax.swing.JDialog {
     }
 
     public static synchronized JDGCadastroCategoria getInstance(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JDGCadastroCategoria(parent, modal, controlador);
+        if (UNIQUEINSTANCE == null) {
+            UNIQUEINSTANCE = new JDGCadastroCategoria(parent, modal, controlador);
         }
 
-        uniqueInstance.setModal(modal);
-        return uniqueInstance;
+        UNIQUEINSTANCE.setModal(modal);
+        return UNIQUEINSTANCE;
     }
 
     private void limparTela() {

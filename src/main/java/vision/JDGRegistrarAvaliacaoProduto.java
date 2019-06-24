@@ -6,6 +6,15 @@
 package vision;
 
 import control.ControleVisao;
+import domain.Produto;
+import domain.state.produto.DanoPermanente;
+import domain.state.produto.EmAluguel;
+import domain.state.produto.EmLoja;
+import domain.state.produto.EmManutencao;
+import java.util.List;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -13,9 +22,10 @@ import control.ControleVisao;
  */
 public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
 
-    private static JDGRegistrarAvaliacaoProduto uniqueInstance;
+    private static JDGRegistrarAvaliacaoProduto UNIQUEINSTANCE;
 
     private final ControleVisao controladorVisao;
+    private List<Produto> resultadoBusca;
 
     private JDGRegistrarAvaliacaoProduto(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
         super(parent, modal);
@@ -24,13 +34,31 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
     }
 
     public static synchronized JDGRegistrarAvaliacaoProduto getInstance(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JDGRegistrarAvaliacaoProduto(parent, modal, controlador);
+        if (UNIQUEINSTANCE == null) {
+            UNIQUEINSTANCE = new JDGRegistrarAvaliacaoProduto(parent, modal, controlador);
         }
 
-        uniqueInstance.setModal(modal);
-        return uniqueInstance;
+        UNIQUEINSTANCE.setModal(modal);
+        return UNIQUEINSTANCE;
     }
+
+    private void atualizaTabela(List<Produto> resultadoBusca) {
+        DefaultTableModel tabela = (DefaultTableModel) tblProdutos.getModel();
+
+        tabela.setRowCount(0);
+
+        if (!resultadoBusca.isEmpty() || resultadoBusca != null) {
+            tblProdutos.setEnabled(true);
+            tblProdutos.setEnabled(true);
+            resultadoBusca.forEach((p) -> {
+                tabela.addRow(new Object[]{
+                    p.getNome(),
+                    p.getEstado()
+                });
+            });
+        }
+    }
+
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -39,6 +67,7 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
         rdbEmManutencao = new javax.swing.JRadioButton();
         rdbEmLoja = new javax.swing.JRadioButton();
         rdbEmDanoPermanente = new javax.swing.JRadioButton();
+        rdbEmAluguel = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProdutos = new javax.swing.JTable();
         btnEmManutencao = new javax.swing.JButton();
@@ -50,7 +79,7 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Visualizar Produtos"));
         jPanel1.setToolTipText("");
-        jPanel1.setLayout(new java.awt.GridBagLayout());
+        jPanel1.setLayout(new java.awt.GridLayout(2, 2));
 
         grpEstadoProduto.add(rdbEmManutencao);
         rdbEmManutencao.setText("Em Manutenção");
@@ -59,7 +88,7 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
                 rdbEmManutencaoActionPerformed(evt);
             }
         });
-        jPanel1.add(rdbEmManutencao, new java.awt.GridBagConstraints());
+        jPanel1.add(rdbEmManutencao);
 
         grpEstadoProduto.add(rdbEmLoja);
         rdbEmLoja.setText("Em Loja");
@@ -68,7 +97,7 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
                 rdbEmLojaActionPerformed(evt);
             }
         });
-        jPanel1.add(rdbEmLoja, new java.awt.GridBagConstraints());
+        jPanel1.add(rdbEmLoja);
 
         grpEstadoProduto.add(rdbEmDanoPermanente);
         rdbEmDanoPermanente.setText("Em Dano Permanente");
@@ -77,7 +106,15 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
                 rdbEmDanoPermanenteActionPerformed(evt);
             }
         });
-        jPanel1.add(rdbEmDanoPermanente, new java.awt.GridBagConstraints());
+        jPanel1.add(rdbEmDanoPermanente);
+
+        rdbEmAluguel.setText("EmAluguel");
+        rdbEmAluguel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbEmAluguelActionPerformed(evt);
+            }
+        });
+        jPanel1.add(rdbEmAluguel);
 
         tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -88,16 +125,35 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
             }
         ));
         tblProdutos.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        tblProdutos.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jScrollPane1.setViewportView(tblProdutos);
 
+        btnEmManutencao.setMnemonic('M');
         btnEmManutencao.setText("Em Manutenção");
         btnEmManutencao.setEnabled(false);
+        btnEmManutencao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmManutencaoActionPerformed(evt);
+            }
+        });
 
+        btnEmLoja.setMnemonic('L');
         btnEmLoja.setText("Em Loja");
         btnEmLoja.setEnabled(false);
+        btnEmLoja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmManutencaoActionPerformed(evt);
+            }
+        });
 
+        btnDanoPermanente.setMnemonic('D');
         btnDanoPermanente.setText("Dano Permanente");
         btnDanoPermanente.setEnabled(false);
+        btnDanoPermanente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEmManutencaoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,7 +176,7 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -140,6 +196,9 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
         btnEmLoja.setEnabled(true);
         btnEmManutencao.setEnabled(false);
 
+        resultadoBusca = controladorVisao.getControleDominio().produtoReadEstado(EmManutencao.getInstance());
+        atualizaTabela(resultadoBusca);
+
     }//GEN-LAST:event_rdbEmManutencaoActionPerformed
 
     private void rdbEmLojaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbEmLojaActionPerformed
@@ -147,6 +206,9 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
         btnDanoPermanente.setEnabled(true);
         btnEmLoja.setEnabled(false);
         btnEmManutencao.setEnabled(true);
+
+        resultadoBusca = controladorVisao.getControleDominio().produtoReadEstado(EmLoja.getInstance());
+        atualizaTabela(resultadoBusca);
 
     }//GEN-LAST:event_rdbEmLojaActionPerformed
 
@@ -156,7 +218,50 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
         btnEmLoja.setEnabled(true);
         btnEmManutencao.setEnabled(true);
 
+        resultadoBusca = controladorVisao.getControleDominio().produtoReadEstado(DanoPermanente.getInstance());
+        atualizaTabela(resultadoBusca);
+
     }//GEN-LAST:event_rdbEmDanoPermanenteActionPerformed
+
+    private void btnEmManutencaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEmManutencaoActionPerformed
+
+        DefaultTableModel tabela = (DefaultTableModel) tblProdutos.getModel();
+        Integer linhaSelecionada = tblProdutos.getSelectedRow();
+
+        if (linhaSelecionada > -1) {
+
+            Produto produto = resultadoBusca.get(linhaSelecionada);
+
+            resultadoBusca.remove(produto);
+
+            switch (((JButton) evt.getSource()).getMnemonic()) {
+                case 'M':
+                    produto.setEstado(produto.getEstado().setEmManutencao());
+                    break;
+                case 'L':
+                    produto.setEstado(produto.getEstado().setEmLoja());
+                    break;
+                case 'D':
+                    produto.setEstado(produto.getEstado().setDanoPermanente());
+                    break;
+            }
+
+            controladorVisao.getControleDominio().produtoUpdate(produto);
+            tabela.removeRow(linhaSelecionada);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione ao menos uma linha da tabela.");
+        }
+    }//GEN-LAST:event_btnEmManutencaoActionPerformed
+
+    private void rdbEmAluguelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbEmAluguelActionPerformed
+        btnDanoPermanente.setEnabled(false);
+        btnEmLoja.setEnabled(false);
+        btnEmManutencao.setEnabled(false);
+
+        resultadoBusca = controladorVisao.getControleDominio().produtoReadEstado(EmAluguel.getInstance());
+        atualizaTabela(resultadoBusca);
+    }//GEN-LAST:event_rdbEmAluguelActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDanoPermanente;
@@ -165,6 +270,7 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
     private javax.swing.ButtonGroup grpEstadoProduto;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rdbEmAluguel;
     private javax.swing.JRadioButton rdbEmDanoPermanente;
     private javax.swing.JRadioButton rdbEmLoja;
     private javax.swing.JRadioButton rdbEmManutencao;

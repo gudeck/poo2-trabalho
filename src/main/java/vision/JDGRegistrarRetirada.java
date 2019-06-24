@@ -8,7 +8,8 @@ package vision;
 import control.ControleVisao;
 import domain.Aluguel;
 import domain.Cliente;
-import domain.ProdutoAlugado;
+import domain.Produto;
+import domain.state.aluguel.NaoRetirado;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -19,12 +20,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JDGRegistrarRetirada extends javax.swing.JDialog {
 
-    private static JDGRegistrarRetirada uniqueInstance;
+    private static JDGRegistrarRetirada UNIQUEINSTANCE;
 
     private final ControleVisao controladorVisao;
     private Cliente cliente;
     private Aluguel aluguel;
-    private List<ProdutoAlugado> resultadoBusca;
+    private List<Produto> resultadoBusca;
 
     private JDGRegistrarRetirada(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
         super(parent, modal);
@@ -34,12 +35,12 @@ public class JDGRegistrarRetirada extends javax.swing.JDialog {
     }
 
     public static synchronized JDGRegistrarRetirada getInstance(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JDGRegistrarRetirada(parent, modal, controlador);
+        if (UNIQUEINSTANCE == null) {
+            UNIQUEINSTANCE = new JDGRegistrarRetirada(parent, modal, controlador);
         }
 
-        uniqueInstance.setModal(modal);
-        return uniqueInstance;
+        UNIQUEINSTANCE.setModal(modal);
+        return UNIQUEINSTANCE;
     }
 
     /**
@@ -160,17 +161,17 @@ public class JDGRegistrarRetirada extends javax.swing.JDialog {
 
         DefaultTableModel tabela = (DefaultTableModel) tblRoupas.getModel();
 
-        aluguel = controladorVisao.getControleDominio().aluguelReadDireto(cliente, "naoretirado");
+        aluguel = controladorVisao.getControleDominio().aluguelReadDireto(cliente, NaoRetirado.getInstance());
         tabela.setRowCount(0);
 
-        if (aluguel != null) {
+        if (aluguel.getProdutosAlugados().size() > 0) {
             resultadoBusca = (List) aluguel.getProdutosAlugados();
             txtNomeCliente.setText(cliente.toString());
             btnConfirmar.setEnabled(true);
-            for (ProdutoAlugado pa : resultadoBusca) {
-                tabela.addRow(new Object[]{pa.getProduto().getNome(),
-                    pa.getProduto().getTamanho(),
-                    pa.getProduto().getDescricao()});
+            for (Produto pa : resultadoBusca) {
+                tabela.addRow(new Object[]{pa.getNome(),
+                    pa.getTamanho(),
+                    pa.getDescricao()});
             }
         } else {
             JOptionPane.showMessageDialog(this, "O cliente selecionado não possui produtos a serem retirados.");
@@ -183,10 +184,8 @@ public class JDGRegistrarRetirada extends javax.swing.JDialog {
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
 
         aluguel.setEstado(aluguel.getEstado().setEmAberto());
-        for (ProdutoAlugado pa : resultadoBusca) {
-            pa.getProduto().setEstado(
-                    pa.getProduto().getEstado().setEmAluguel()
-            );
+        for (Produto pa : resultadoBusca) {
+            pa.setEstado(pa.getEstado().setEmAluguel());
         }
         controladorVisao.getControleDominio().aluguelUpdate(aluguel);
         JOptionPane.showMessageDialog(this, "Registro de retirada efetuado com sucesso.");

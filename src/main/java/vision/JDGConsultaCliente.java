@@ -6,10 +6,6 @@
 package vision;
 
 import control.ControleVisao;
-import domain.Cliente;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -18,7 +14,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JDGConsultaCliente extends javax.swing.JDialog {
 
-    private static JDGConsultaCliente uniqueInstance;
+    private static JDGConsultaCliente UNIQUEINSTANCE;
 
     private final ControleVisao controladorVisao;
 
@@ -31,12 +27,12 @@ public class JDGConsultaCliente extends javax.swing.JDialog {
     }
 
     public static synchronized JDGConsultaCliente getInstance(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JDGConsultaCliente(parent, modal, controlador);
+        if (UNIQUEINSTANCE == null) {
+            UNIQUEINSTANCE = new JDGConsultaCliente(parent, modal, controlador);
         }
 
-        uniqueInstance.setModal(modal);
-        return uniqueInstance;
+        UNIQUEINSTANCE.setModal(modal);
+        return UNIQUEINSTANCE;
     }
 
     /**

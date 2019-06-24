@@ -7,7 +7,11 @@ package dao;
 
 import domain.Categoria;
 import domain.Produto;
+import domain.state.produto.EstadoProduto;
 import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 
@@ -17,63 +21,36 @@ import org.hibernate.Session;
  */
 public class DAOProduto extends GenericDAO {
 
-    private static DAOProduto uniqueInstance;
+    private static DAOProduto UNIQUEINSTANCE;
 
     private DAOProduto() {
     }
 
     public static synchronized DAOProduto getInstance() {
-        if (uniqueInstance == null) {
-            uniqueInstance = new DAOProduto();
+        if (UNIQUEINSTANCE == null) {
+            UNIQUEINSTANCE = new DAOProduto();
         }
 
-        return uniqueInstance;
+        return UNIQUEINSTANCE;
     }
 
-    public List<Produto> readEmLoja() {
+    public List<Produto> readEstado(EstadoProduto estado) {
         List lista = null;
         Session sessao = null;
 
         try {
             // Abrir a SESSÃO
-            sessao = ConexaoHibernate.getSessionFactory().openSession();
+            sessao = ConexaoHibernate.getSESSIONFACTORY().openSession();
             sessao.getTransaction().begin();
 
-            lista = sessao.createNativeQuery("select "
-                    + "p.* "
-                    + "from anarrie.produto p "
-                    + "inner join "
-                    + "anarrie.estadoproduto e on p.codEstado= e.codEstado "
-                    + "and e.DTYPE like '%loja%';", Produto.class).list();
+            CriteriaBuilder builder = sessao.getCriteriaBuilder();
 
-            sessao.getTransaction().commit();
-            sessao.close();
-        } catch (HibernateException ex) {
-            if (sessao != null) {
-                sessao.getTransaction().rollback();
-                sessao.close();
-            }
+            CriteriaQuery<Produto> criteria = builder.createQuery(Produto.class);
+            Root<Produto> root = criteria.from(Produto.class);
+            criteria.select(root);
+            criteria.where(builder.equal(root.get("estado"), estado));
 
-            throw new HibernateException(ex);
-        }
-        return lista;
-    }
-
-    public List<Produto> readEmManutencao() {
-        List lista = null;
-        Session sessao = null;
-
-        try {
-            // Abrir a SESSÃO
-            sessao = ConexaoHibernate.getSessionFactory().openSession();
-            sessao.getTransaction().begin();
-
-            lista = sessao.createNativeQuery("select "
-                    + "p.* "
-                    + "from anarrie.produto p "
-                    + "inner join "
-                    + "anarrie.estadoproduto e on p.codEstado= e.codEstado "
-                    + "and e.DTYPE like '%manutencao%';", Produto.class).list();
+            lista = sessao.createQuery(criteria).getResultList();
 
             sessao.getTransaction().commit();
             sessao.close();
@@ -94,16 +71,21 @@ public class DAOProduto extends GenericDAO {
 
         try {
             // Abrir a SESSÃO
-            sessao = ConexaoHibernate.getSessionFactory().openSession();
+            sessao = ConexaoHibernate.getSESSIONFACTORY().openSession();
             sessao.getTransaction().begin();
 
-            lista = sessao.createNativeQuery("select "
-                    + "p.* "
-                    + "from anarrie.produto p "
-                    + "inner join "
-                    + "anarrie.categoria c on p.codCategoria = c.codCategoria "
-                    + "and p.tamanho like '" + tamanho + "' "
-                    + "and c.codCategoria = " + categoria.getCodCategoria() + ";", Produto.class).list();
+            CriteriaBuilder builder = sessao.getCriteriaBuilder();
+
+            CriteriaQuery<Produto> criteria = builder.createQuery(Produto.class);
+            Root<Produto> root = criteria.from(Produto.class);
+            criteria.select(root);
+            criteria.where(
+                    builder.and(
+                            builder.equal(root.get("tamanho"), tamanho),
+                            builder.equal(root.get("categoria"), categoria))
+            );
+
+            lista = sessao.createQuery(criteria).getResultList();
 
             sessao.getTransaction().commit();
             sessao.close();
@@ -117,4 +99,36 @@ public class DAOProduto extends GenericDAO {
         }
         return lista;
     }
+
+    public List<Produto> readCategoria(Categoria categoria) {
+        List lista = null;
+        Session sessao = null;
+
+        try {
+            // Abrir a SESSÃO
+            sessao = ConexaoHibernate.getSESSIONFACTORY().openSession();
+            sessao.getTransaction().begin();
+
+            CriteriaBuilder builder = sessao.getCriteriaBuilder();
+
+            CriteriaQuery<Produto> criteria = builder.createQuery(Produto.class);
+            Root<Produto> root = criteria.from(Produto.class);
+            criteria.select(root);
+            criteria.where(builder.equal(root.get("categoria"), categoria));
+
+            lista = sessao.createQuery(criteria).getResultList();
+
+            sessao.getTransaction().commit();
+            sessao.close();
+        } catch (HibernateException ex) {
+            if (sessao != null) {
+                sessao.getTransaction().rollback();
+                sessao.close();
+            }
+
+            throw new HibernateException(ex);
+        }
+        return lista;
+    }
+
 }

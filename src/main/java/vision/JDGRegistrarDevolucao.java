@@ -9,8 +9,7 @@ import control.ControleVisao;
 import domain.Aluguel;
 import domain.Cliente;
 import domain.Produto;
-import domain.ProdutoAlugado;
-import java.util.ArrayList;
+import domain.state.aluguel.EmAberto;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -21,12 +20,12 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JDGRegistrarDevolucao extends javax.swing.JDialog {
 
-    private static JDGRegistrarDevolucao uniqueInstance;
+    private static JDGRegistrarDevolucao UNIQUEINSTANCE;
 
     private final ControleVisao controladorVisao;
     private Cliente cliente;
     private Aluguel aluguel;
-    private List<ProdutoAlugado> resultadoBusca;
+    private List<Produto> resultadoBusca;
 
     private JDGRegistrarDevolucao(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
         super(parent, modal);
@@ -35,12 +34,12 @@ public class JDGRegistrarDevolucao extends javax.swing.JDialog {
     }
 
     public static synchronized JDGRegistrarDevolucao getInstance(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
-        if (uniqueInstance == null) {
-            uniqueInstance = new JDGRegistrarDevolucao(parent, modal, controlador);
+        if (UNIQUEINSTANCE == null) {
+            UNIQUEINSTANCE = new JDGRegistrarDevolucao(parent, modal, controlador);
         }
 
-        uniqueInstance.setModal(modal);
-        return uniqueInstance;
+        UNIQUEINSTANCE.setModal(modal);
+        return UNIQUEINSTANCE;
     }
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -181,7 +180,7 @@ public class JDGRegistrarDevolucao extends javax.swing.JDialog {
         cliente = controladorVisao.buscaCliente();
         DefaultTableModel tabela = (DefaultTableModel) tblProduto.getModel();
 
-        aluguel = controladorVisao.getControleDominio().aluguelReadDireto(cliente, "emaberto");
+        aluguel = controladorVisao.getControleDominio().aluguelReadDireto(cliente, EmAberto.getInstance());
         tabela.setRowCount(0);
 
         if (aluguel != null) {
@@ -190,10 +189,10 @@ public class JDGRegistrarDevolucao extends javax.swing.JDialog {
             resultadoBusca.forEach((pa) -> {
 
                 tabela.addRow(new Object[]{
-                    pa.getProduto().getNome(),
-                    pa.getProduto().getTamanho(),
-                    pa.getProduto().getDescricao(),
-                    pa.getProduto().getEstado()
+                    pa.getNome(),
+                    pa.getTamanho(),
+                    pa.getDescricao(),
+                    pa.getEstado()
                 });
 
             });
@@ -214,32 +213,31 @@ public class JDGRegistrarDevolucao extends javax.swing.JDialog {
         Integer linhaSelecionada = tblProduto.getSelectedRow();
         if (linhaSelecionada > -1) {
 
-            ProdutoAlugado produtoAlugado = resultadoBusca.get(linhaSelecionada);
-            Produto produto = produtoAlugado.getProduto();
+            Produto produto = resultadoBusca.get(linhaSelecionada);
 
             if (rdbPerfeito.isSelected()) {
-                resultadoBusca.remove(produtoAlugado);
+                resultadoBusca.remove(produto);
 
                 produto.setEstado(produto.getEstado().setEmManutencao());
 
-                resultadoBusca.add(produtoAlugado);
+                resultadoBusca.add(produto);
                 tabela.removeRow(linhaSelecionada);
 
             } else if (rdbDanificado.isSelected()) {
-                resultadoBusca.remove(produtoAlugado);
+                resultadoBusca.remove(produto);
 
                 produto.setEstado(produto.getEstado().setEmManutencao());
 
-                resultadoBusca.add(produtoAlugado);
+                resultadoBusca.add(produto);
                 aluguel.setValorTotal(aluguel.getValorTotal() + produto.getValorDiaria() * 0.5);
                 tabela.removeRow(linhaSelecionada);
 
             } else if (rdbDanoPermanente.isSelected()) {
-                resultadoBusca.remove(produtoAlugado);
+                resultadoBusca.remove(produto);
 
                 produto.setEstado(produto.getEstado().setDanoPermanente());
 
-                resultadoBusca.add(produtoAlugado);
+                resultadoBusca.add(produto);
                 aluguel.setValorTotal(aluguel.getValorTotal() + produto.getValorDanoPermanente());
                 tabela.removeRow(linhaSelecionada);
             } else {
@@ -267,21 +265,6 @@ public class JDGRegistrarDevolucao extends javax.swing.JDialog {
 
     }//GEN-LAST:event_btnSalvarActionPerformed
 
-//     DefaultTableModel tabela = (DefaultTableModel) tblProduto.getModel();
-//        if (tabela.getRowCount() == 0) {
-//
-//            JOptionPane.showMessageDialog(this, "Todos os produtos desse aluguel foram avaliados.");
-//            JOptionPane.showMessageDialog(this, "O valor a ser pago é: " + (aluguel.getValorTotal() - aluguel.getValorPago()));
-//            aluguel.setValorPago(aluguel.getValorTotal());
-//            aluguel.setEstado(aluguel.getEstado().setFechado());
-//            controladorVisao.getControleDominio().aluguelUpdate(aluguel);
-//
-//            tabela.setRowCount(0);
-//            resultadoBusca.clear();
-//            aluguel = null;
-//            cliente = null;
-//            txtNome.setText("");
-//        }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnSalvar;

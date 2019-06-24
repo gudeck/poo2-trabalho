@@ -1,27 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
-    <persistence-unit name="bdanarrie" transaction-type="RESOURCE_LOCAL">
-        <provider>org.hibernate.ejb.HibernatePersistence</provider>
-        <class>domain.Aluguel</class>
-        <class>domain.Categoria</class>
-        <class>domain.Cliente</class>
-        <class>domain.Manutencao</class>
-        <class>domain.Produto</class>
-        <class>domain.ProdutoAlugado</class>
-        <class>domain.state.produto.EmManutencao</class>
-        <class>domain.state.produto.EmAluguel</class>
-        <class>domain.state.produto.EmLoja</class>
-        <properties>
-            <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/anarrie?useTimezone=true&amp;serverTimezone=UTC&amp;createDatabaseIfNotExist=true"/>
-            <property name="javax.persistence.jdbc.user" value="root"/>
-            <property name="javax.persistence.jdbc.password" value="root"/>
-            <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
-            <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
-            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
-            <property name="hibernate.show_sql" value="true"/>
-            <property name="hibernate.dialect" value="MySQLInnoDBDialect"/>
-            <property name="hibernate.format_sql" value="true"/>
-        </properties>
-    </persistence-unit>
+  <persistence-unit name="bdanarrie" transaction-type="RESOURCE_LOCAL">
+    <provider>org.hibernate.ejb.HibernatePersistence</provider>
+    <class>domain.Aluguel</class>
+    <class>domain.Categoria</class>
+    <class>domain.Cliente</class>
+    <class>domain.state.produto.EmManutencao</class>
+    <class>domain.state.produto.EmAluguel</class>
+    <class>domain.state.produto.EmLoja</class>
+    <class>domain.state.aluguel.EmAberto</class>
+    <class>domain.state.aluguel.EstadoAluguel</class>
+    <class>domain.state.aluguel.Fechado</class>
+    <class>domain.state.aluguel.NaoRetirado</class>
+    <class>domain.state.produto.DanoPermanente</class>
+    <class>domain.state.produto.EstadoProduto</class>
+    <class>domain.Produto</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/anarrie?useTimezone=true&amp;serverTimezone=UTC&amp;createDatabaseIfNotExist=true"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider"/>
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.dialect" value="MySQLInnoDBDialect"/>
+      <property name="hibernate.format_sql" value="true"/>
+    </properties>
+  </persistence-unit>
 </persistence>
