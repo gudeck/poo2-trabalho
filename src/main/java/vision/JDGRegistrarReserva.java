@@ -142,6 +142,7 @@ public class JDGRegistrarReserva extends javax.swing.JDialog {
             }
         });
 
+        btnCadastrarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Ic_add_circle_outline_48px.svg.png"))); // NOI18N
         btnCadastrarCliente.setEnabled(false);
         btnCadastrarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -184,7 +185,6 @@ public class JDGRegistrarReserva extends javax.swing.JDialog {
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        ftxtDataDevolucao.setText("  /  /    ");
 
         try {
             ftxtDataRetirada.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));

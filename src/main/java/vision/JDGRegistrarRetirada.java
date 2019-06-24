@@ -157,21 +157,25 @@ public class JDGRegistrarRetirada extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaActionPerformed
+        cliente = null;
         cliente = controladorVisao.buscaCliente();
 
+        System.out.println("\n\n" + cliente + "\n\n");
         DefaultTableModel tabela = (DefaultTableModel) tblRoupas.getModel();
 
+        aluguel = null;
         aluguel = controladorVisao.getControleDominio().aluguelReadDireto(cliente, NaoRetirado.getInstance());
         tabela.setRowCount(0);
-
-        if (aluguel.getProdutosAlugados().size() > 0) {
-            resultadoBusca = (List) aluguel.getProdutosAlugados();
-            txtNomeCliente.setText(cliente.toString());
-            btnConfirmar.setEnabled(true);
-            for (Produto pa : resultadoBusca) {
-                tabela.addRow(new Object[]{pa.getNome(),
-                    pa.getTamanho(),
-                    pa.getDescricao()});
+        if (aluguel != null) {
+            if (aluguel.getProdutosAlugados().size() > 0) {
+                resultadoBusca = (List) aluguel.getProdutosAlugados();
+                txtNomeCliente.setText(cliente.toString());
+                btnConfirmar.setEnabled(true);
+                for (Produto pa : resultadoBusca) {
+                    tabela.addRow(new Object[]{pa.getNome(),
+                        pa.getTamanho(),
+                        pa.getDescricao()});
+                }
             }
         } else {
             JOptionPane.showMessageDialog(this, "O cliente selecionado não possui produtos a serem retirados.");

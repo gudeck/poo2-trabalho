@@ -216,8 +216,8 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
     private void rdbEmDanoPermanenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbEmDanoPermanenteActionPerformed
 
         btnDanoPermanente.setEnabled(false);
-        btnEmLoja.setEnabled(true);
-        btnEmManutencao.setEnabled(true);
+        btnEmLoja.setEnabled(false);
+        btnEmManutencao.setEnabled(false);
 
         resultadoBusca = controladorVisao.getControleDominio().produtoReadEstado(DanoPermanente.getInstance());
         atualizaTabela(resultadoBusca);
