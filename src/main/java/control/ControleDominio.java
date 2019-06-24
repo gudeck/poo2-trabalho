@@ -230,11 +230,16 @@ public class ControleDominio {
     }
 
     public void aluguelUpdate(Aluguel aluguel) {
-        for (ProdutoAlugado pa : aluguel.getProdutosAlugados()) {
-            genericDao.create_update(pa);
-        }
+
+        aluguel.getProdutosAlugados().forEach((pa) -> {
+            genericDao.create_update(pa.getProduto());
+        });
         DAOAluguel.getInstance().create_update(aluguel);
-        
+
+    }
+
+    public List<Produto> produtoReadTamanhoCategoria(String tamanho, Categoria categoria) {
+        return DAOProduto.getInstance().readTamanhoCategoria(tamanho, categoria);
     }
 
 }

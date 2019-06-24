@@ -139,6 +139,4 @@ public class Aluguel implements Serializable {
         this.produtosAlugados = produtosAlugados;
     }
 
-    
-    
 }

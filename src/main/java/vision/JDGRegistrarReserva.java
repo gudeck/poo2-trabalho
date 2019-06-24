@@ -303,7 +303,6 @@ public class JDGRegistrarReserva extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Selecione pelo ao menos um produto.");
         }
 
-
     }//GEN-LAST:event_btnReservarActionPerformed
 
     private void formComponentShown(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_formComponentShown

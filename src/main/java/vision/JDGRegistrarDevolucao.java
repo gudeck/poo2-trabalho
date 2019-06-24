@@ -60,11 +60,6 @@ public class JDGRegistrarDevolucao extends javax.swing.JDialog {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Registrar Devolução");
-        addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                formMouseClicked(evt);
-            }
-        });
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Cliente"));
 
@@ -117,11 +112,6 @@ public class JDGRegistrarDevolucao extends javax.swing.JDialog {
             }
         });
         tblProduto.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        tblProduto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tblProdutoMouseClicked(evt);
-            }
-        });
         jScrollPane1.setViewportView(tblProduto);
         if (tblProduto.getColumnModel().getColumnCount() > 0) {
             tblProduto.getColumnModel().getColumn(0).setPreferredWidth(6);
@@ -189,71 +179,76 @@ public class JDGRegistrarDevolucao extends javax.swing.JDialog {
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
         cliente = controladorVisao.buscaCliente();
-        txtNome.setText(cliente.toString());
+        DefaultTableModel tabela = (DefaultTableModel) tblProduto.getModel();
 
         aluguel = controladorVisao.getControleDominio().aluguelReadDireto(cliente, "emaberto");
+        tabela.setRowCount(0);
 
-        if (aluguel == null) {
-            JOptionPane.showMessageDialog(this, "O usuário não possui aluguéis a serem devolvidos.");
-        } else {
-
-            DefaultTableModel tabela = (DefaultTableModel) tblProduto.getModel();
+        if (aluguel != null) {
             resultadoBusca = aluguel.getProdutosAlugados();
-            tabela.setRowCount(0);
+            txtNome.setText(cliente.toString());
+            resultadoBusca.forEach((pa) -> {
 
-            for (ProdutoAlugado pa : resultadoBusca) {
                 tabela.addRow(new Object[]{
                     pa.getProduto().getNome(),
                     pa.getProduto().getTamanho(),
                     pa.getProduto().getDescricao(),
                     pa.getProduto().getEstado()
                 });
-            }
 
+            });
             rdbDanificado.setEnabled(true);
             rdbDanoPermanente.setEnabled(true);
             rdbPerfeito.setEnabled(true);
             btnSalvar.setEnabled(true);
+        } else {
+            JOptionPane.showMessageDialog(this, "O cliente selecionado não possui produtos a serem devolvidos.");
+            aluguel = null;
+            cliente = null;
+            resultadoBusca = null;
         }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
-
-    private void tblProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProdutoMouseClicked
-        grpEstado.clearSelection();
-    }//GEN-LAST:event_tblProdutoMouseClicked
 
     private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
         DefaultTableModel tabela = (DefaultTableModel) tblProduto.getModel();
         Integer linhaSelecionada = tblProduto.getSelectedRow();
         if (linhaSelecionada > -1) {
 
-            Produto produto = resultadoBusca.get(linhaSelecionada).getProduto();
+            ProdutoAlugado produtoAlugado = resultadoBusca.get(linhaSelecionada);
+            Produto produto = produtoAlugado.getProduto();
 
             if (rdbPerfeito.isSelected()) {
+                resultadoBusca.remove(produtoAlugado);
+
                 produto.setEstado(produto.getEstado().setEmManutencao());
+
+                resultadoBusca.add(produtoAlugado);
                 tabela.removeRow(linhaSelecionada);
+
             } else if (rdbDanificado.isSelected()) {
+                resultadoBusca.remove(produtoAlugado);
+
                 produto.setEstado(produto.getEstado().setEmManutencao());
+
+                resultadoBusca.add(produtoAlugado);
                 aluguel.setValorTotal(aluguel.getValorTotal() + produto.getValorDiaria() * 0.5);
                 tabela.removeRow(linhaSelecionada);
+
             } else if (rdbDanoPermanente.isSelected()) {
+                resultadoBusca.remove(produtoAlugado);
+
                 produto.setEstado(produto.getEstado().setDanoPermanente());
+
+                resultadoBusca.add(produtoAlugado);
                 aluguel.setValorTotal(aluguel.getValorTotal() + produto.getValorDanoPermanente());
                 tabela.removeRow(linhaSelecionada);
             } else {
                 JOptionPane.showMessageDialog(this, "Selecione um estado.");
             }
 
-        } else {
-            JOptionPane.showMessageDialog(this, "Selecione ao menos um registro da tabela!", "ERRO", JOptionPane.ERROR_MESSAGE);
-        }
+            grpEstado.clearSelection();
 
-    }//GEN-LAST:event_btnSalvarActionPerformed
-
-    private void formMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseClicked
-        DefaultTableModel tabela = (DefaultTableModel) tblProduto.getModel();
-        if (tabela.getRowCount() == 0) {
-
-            System.out.println("\n\n\n\n\n" + resultadoBusca.get(0).getProduto().getEstado().getClass());
+        } else if (tabela.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "Todos os produtos desse aluguel foram avaliados.");
             JOptionPane.showMessageDialog(this, "O valor a ser pago é: " + (aluguel.getValorTotal() - aluguel.getValorPago()));
             aluguel.setValorPago(aluguel.getValorTotal());
@@ -265,10 +260,28 @@ public class JDGRegistrarDevolucao extends javax.swing.JDialog {
             aluguel = null;
             cliente = null;
             txtNome.setText("");
+            grpEstado.clearSelection();
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione ao menos um registro da tabela!", "ERRO", JOptionPane.ERROR_MESSAGE);
         }
 
-    }//GEN-LAST:event_formMouseClicked
+    }//GEN-LAST:event_btnSalvarActionPerformed
 
+//     DefaultTableModel tabela = (DefaultTableModel) tblProduto.getModel();
+//        if (tabela.getRowCount() == 0) {
+//
+//            JOptionPane.showMessageDialog(this, "Todos os produtos desse aluguel foram avaliados.");
+//            JOptionPane.showMessageDialog(this, "O valor a ser pago é: " + (aluguel.getValorTotal() - aluguel.getValorPago()));
+//            aluguel.setValorPago(aluguel.getValorTotal());
+//            aluguel.setEstado(aluguel.getEstado().setFechado());
+//            controladorVisao.getControleDominio().aluguelUpdate(aluguel);
+//
+//            tabela.setRowCount(0);
+//            resultadoBusca.clear();
+//            aluguel = null;
+//            cliente = null;
+//            txtNome.setText("");
+//        }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscarCliente;
     private javax.swing.JButton btnSalvar;

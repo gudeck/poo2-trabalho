@@ -5,6 +5,7 @@
  */
 package dao;
 
+import domain.Categoria;
 import domain.Produto;
 import java.util.List;
 import org.hibernate.HibernateException;
@@ -39,7 +40,7 @@ public class DAOProduto extends GenericDAO {
             sessao.getTransaction().begin();
 
             lista = sessao.createNativeQuery("select "
-                    + "* "
+                    + "p.* "
                     + "from anarrie.produto p "
                     + "inner join "
                     + "anarrie.estadoproduto e on p.codEstado= e.codEstado "
@@ -57,7 +58,7 @@ public class DAOProduto extends GenericDAO {
         }
         return lista;
     }
-    
+
     public List<Produto> readEmManutencao() {
         List lista = null;
         Session sessao = null;
@@ -68,7 +69,7 @@ public class DAOProduto extends GenericDAO {
             sessao.getTransaction().begin();
 
             lista = sessao.createNativeQuery("select "
-                    + "* "
+                    + "p.* "
                     + "from anarrie.produto p "
                     + "inner join "
                     + "anarrie.estadoproduto e on p.codEstado= e.codEstado "
@@ -87,48 +88,33 @@ public class DAOProduto extends GenericDAO {
         return lista;
     }
 
-//    public List<Produto> readBetweenDates(Date dataRetirada, Date dataDevolucao) {
-//        List lista = null;
-//        Session sessao = null;
-//
-//        try {
-//            // Abrir a SESSÃO
-//            sessao = ConexaoHibernate.getSessionFactory().openSession();
-//            sessao.getTransaction().begin();
-//
-////            CriteriaBuilder builder = sessao.getCriteriaBuilder();
-////            CriteriaQuery<Produto> criteria = builder.createQuery(Produto.class);
-////
-////            Root<Produto> root = criteria.from(Produto.class);
-////
-////            Join<Produto, ProdutoAlugado> produtoAlugadoJoin = root.join("listaProdutosAlugados");
-////            Join<ProdutoAlugado, ProdutoAlugadoPK> chaveJoin = produtoAlugadoJoin.join("chaveComposta");
-////            Join<ProdutoAlugadoPK, Aluguel> aluguelJoin = chaveJoin.join("aluguel");
-////
-////            criteria.where();
-////            
-////            lista = sessao.createQuery( criteria ).getResultList();
-//            lista = sessao.createNativeQuery(
-//                    "SELECT P.* "
-//                    + "FROM PRODUTO P "
-//                    + "INNER JOIN PRODUTOALUGADO PA ON P.CODPRODUTO = PA.CODPRODUTO "
-//                    + "INNER JOIN ALUGUEL A ON PA.CODALUGUEL = A.CODALUGUEL"
-//                    + "WHERE ")
-//                    .addEntity("PRODUTO", Produto.class)
-//                    //                    .addJoin("pr", "phone.person")
-//                    .list();
-//
-//            sessao.getTransaction().commit();
-//            sessao.close();
-//        } catch (HibernateException ex) {
-//            if (sessao != null) {
-//                sessao.getTransaction().rollback();
-//                sessao.close();
-//            }
-//
-//            throw new HibernateException(ex);
-//        }
-//        return lista;
-//
-//    }
+    public List<Produto> readTamanhoCategoria(String tamanho, Categoria categoria) {
+        List lista = null;
+        Session sessao = null;
+
+        try {
+            // Abrir a SESSÃO
+            sessao = ConexaoHibernate.getSessionFactory().openSession();
+            sessao.getTransaction().begin();
+
+            lista = sessao.createNativeQuery("select "
+                    + "p.* "
+                    + "from anarrie.produto p "
+                    + "inner join "
+                    + "anarrie.categoria c on p.codCategoria = c.codCategoria "
+                    + "and p.tamanho like '" + tamanho + "' "
+                    + "and c.codCategoria = " + categoria.getCodCategoria() + ";", Produto.class).list();
+
+            sessao.getTransaction().commit();
+            sessao.close();
+        } catch (HibernateException ex) {
+            if (sessao != null) {
+                sessao.getTransaction().rollback();
+                sessao.close();
+            }
+
+            throw new HibernateException(ex);
+        }
+        return lista;
+    }
 }

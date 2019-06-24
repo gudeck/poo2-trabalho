@@ -14,38 +14,38 @@ import javax.persistence.*;
  */
 @Entity
 public class ProdutoAlugado implements Serializable {
-    
+
     public ProdutoAlugado() {
     }
-    
+
     @EmbeddedId
     ProdutoAlugadoPK chaveComposta;
-    
+
     @OneToOne
     @JoinColumn(name = "codManutencao")
     Manutencao manutencao;
-    
+
     public void setProdutoAlugado(Aluguel aluguel, Produto produto) {
-        
+
         chaveComposta = new ProdutoAlugadoPK();
         chaveComposta.aluguel = aluguel;
         chaveComposta.produto = produto;
     }
-    
+
     public Aluguel getAluguel() {
         return chaveComposta.getAluguel();
     }
-    
+
     public void setAluguel(Aluguel aluguel) {
         chaveComposta.setAluguel(aluguel);
     }
-    
+
     public Produto getProduto() {
         return chaveComposta.getProduto();
     }
-    
+
     public void setProduto(Produto produto) {
         chaveComposta.setProduto(produto);
     }
-    
+
 }

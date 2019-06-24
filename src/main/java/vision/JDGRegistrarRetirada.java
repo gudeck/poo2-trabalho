@@ -157,28 +157,27 @@ public class JDGRegistrarRetirada extends javax.swing.JDialog {
 
     private void btnBuscaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaActionPerformed
         cliente = controladorVisao.buscaCliente();
-        txtNomeCliente.setText(cliente.toString());
-        btnConfirmar.setEnabled(true);
 
         DefaultTableModel tabela = (DefaultTableModel) tblRoupas.getModel();
 
         aluguel = controladorVisao.getControleDominio().aluguelReadDireto(cliente, "naoretirado");
+        tabela.setRowCount(0);
 
-        if (!(aluguel instanceof Aluguel)) {
-            JOptionPane.showMessageDialog(this, "O usuário não possui aluguéis a serem retirados.");
-        } else {
-
+        if (aluguel != null) {
             resultadoBusca = (List) aluguel.getProdutosAlugados();
-            tabela.setRowCount(0);
-
+            txtNomeCliente.setText(cliente.toString());
+            btnConfirmar.setEnabled(true);
             for (ProdutoAlugado pa : resultadoBusca) {
                 tabela.addRow(new Object[]{pa.getProduto().getNome(),
                     pa.getProduto().getTamanho(),
                     pa.getProduto().getDescricao()});
             }
-
+        } else {
+            JOptionPane.showMessageDialog(this, "O cliente selecionado não possui produtos a serem retirados.");
+            aluguel = null;
+            cliente = null;
+            resultadoBusca = null;
         }
-
     }//GEN-LAST:event_btnBuscaActionPerformed
 
     private void btnConfirmarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnConfirmarActionPerformed
@@ -191,11 +190,11 @@ public class JDGRegistrarRetirada extends javax.swing.JDialog {
         }
         controladorVisao.getControleDominio().aluguelUpdate(aluguel);
         JOptionPane.showMessageDialog(this, "Registro de retirada efetuado com sucesso.");
-        
+
         cliente = null;
         aluguel = null;
         resultadoBusca = null;
-        ((DefaultTableModel)tblRoupas.getModel()).setRowCount(0);
+        ((DefaultTableModel) tblRoupas.getModel()).setRowCount(0);
         txtNomeCliente.setText("");
 
     }//GEN-LAST:event_btnConfirmarActionPerformed

@@ -137,7 +137,11 @@ public class DAOAluguel extends GenericDAO {
 
             throw new HibernateException(ex);
         }
-        return (Aluguel) lista.get(0);
+        if (lista.size() > 0) {
+            return (Aluguel) lista.get(0);
+        } else {
+            return null;
+        }
     }
 
 }

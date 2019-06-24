@@ -215,9 +215,30 @@ public class JDGBuscaProduto extends javax.swing.JDialog {
 
     private void rdbPPActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbPPActionPerformed
         DefaultTableModel tabela = (DefaultTableModel) tblProduto.getModel();
+        String tamanho = "";
+        Categoria categoria = null;
 
-        resultadoBusca = controladorVisao.getControleDominio().produtoReadEmLoja();
-        resultadoBusca.addAll(controladorVisao.getControleDominio().produtoReadEmManutencao());
+        if (rdbPP.isSelected()) {
+            tamanho = "PP";
+        } else if (rdbP.isSelected()) {
+            tamanho = "P";
+        } else if (rdbM.isSelected()) {
+            tamanho = "M";
+        } else if (rdbG.isSelected()) {
+            tamanho = "G";
+        } else if (rdbGG.isSelected()) {
+            tamanho = "G";
+        } else {
+            JOptionPane.showMessageDialog(this, "Selecione um tamanho.");
+        }
+
+        if (cmbCategoria.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Selecione uma categoria.");
+        } else {
+            categoria = (Categoria) cmbCategoria.getSelectedItem();
+        }
+
+        resultadoBusca = controladorVisao.getControleDominio().produtoReadTamanhoCategoria(tamanho, categoria);
 
         tabela.setRowCount(0);
 

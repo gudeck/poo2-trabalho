@@ -54,14 +54,29 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
 
         grpEstadoProduto.add(rdbEmManutencao);
         rdbEmManutencao.setText("Em Manutenção");
+        rdbEmManutencao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbEmManutencaoActionPerformed(evt);
+            }
+        });
         jPanel1.add(rdbEmManutencao, new java.awt.GridBagConstraints());
 
         grpEstadoProduto.add(rdbEmLoja);
         rdbEmLoja.setText("Em Loja");
+        rdbEmLoja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbEmLojaActionPerformed(evt);
+            }
+        });
         jPanel1.add(rdbEmLoja, new java.awt.GridBagConstraints());
 
         grpEstadoProduto.add(rdbEmDanoPermanente);
         rdbEmDanoPermanente.setText("Em Dano Permanente");
+        rdbEmDanoPermanente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbEmDanoPermanenteActionPerformed(evt);
+            }
+        });
         jPanel1.add(rdbEmDanoPermanente, new java.awt.GridBagConstraints());
 
         tblProdutos.setModel(new javax.swing.table.DefaultTableModel(
@@ -76,10 +91,13 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
         jScrollPane1.setViewportView(tblProdutos);
 
         btnEmManutencao.setText("Em Manutenção");
+        btnEmManutencao.setEnabled(false);
 
         btnEmLoja.setText("Em Loja");
+        btnEmLoja.setEnabled(false);
 
         btnDanoPermanente.setText("Dano Permanente");
+        btnDanoPermanente.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -115,6 +133,30 @@ public class JDGRegistrarAvaliacaoProduto extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void rdbEmManutencaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbEmManutencaoActionPerformed
+
+        btnDanoPermanente.setEnabled(true);
+        btnEmLoja.setEnabled(true);
+        btnEmManutencao.setEnabled(false);
+
+    }//GEN-LAST:event_rdbEmManutencaoActionPerformed
+
+    private void rdbEmLojaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbEmLojaActionPerformed
+
+        btnDanoPermanente.setEnabled(true);
+        btnEmLoja.setEnabled(false);
+        btnEmManutencao.setEnabled(true);
+
+    }//GEN-LAST:event_rdbEmLojaActionPerformed
+
+    private void rdbEmDanoPermanenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbEmDanoPermanenteActionPerformed
+
+        btnDanoPermanente.setEnabled(false);
+        btnEmLoja.setEnabled(true);
+        btnEmManutencao.setEnabled(true);
+
+    }//GEN-LAST:event_rdbEmDanoPermanenteActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDanoPermanente;

@@ -113,7 +113,7 @@ public class ControleVisao {
         buscaProduto.setLocationRelativeTo(null);
         buscaProduto.setResizable(false);
         buscaProduto.setVisible(true);
-        
+
         return buscaProduto.getObjetoProduto();
     }
 
