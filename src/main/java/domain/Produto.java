@@ -6,14 +6,9 @@
 package domain;
 
 import domain.state.produto.EstadoProduto;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 
 /**
  *
@@ -22,12 +17,13 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Produto implements Serializable {
 
-    public Produto() {
-    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer codProduto;
+    private Integer codProduto;
+
+    public Produto() {
+        // Construtor vazio pra uso do Hibernate
+    }
 
     @Column(nullable = false)
     private String nome;

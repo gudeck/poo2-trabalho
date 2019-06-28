@@ -6,12 +6,13 @@
 package dao;
 
 import domain.Categoria;
-import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import java.util.List;
 
 /**
  *
@@ -19,17 +20,17 @@ import org.hibernate.Session;
  */
 public class DAOCategoria extends GenericDAO {
 
-    private static DAOCategoria UNIQUEINSTANCE;
+    private static DAOCategoria uniqueInstance;
 
     private DAOCategoria() {
     }
 
     public static synchronized DAOCategoria getInstance() {
-        if (UNIQUEINSTANCE == null) {
-            UNIQUEINSTANCE = new DAOCategoria();
+        if (uniqueInstance == null) {
+            uniqueInstance = new DAOCategoria();
         }
 
-        return UNIQUEINSTANCE;
+        return uniqueInstance;
     }
 
     public List<Categoria> readNome(String nome) {

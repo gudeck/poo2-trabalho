@@ -7,9 +7,10 @@ package vision;
 
 import control.ControleVisao;
 import domain.Categoria;
-import java.util.List;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 /**
  *
@@ -17,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JDGBuscaCategoria extends javax.swing.JDialog {
 
-    private static JDGBuscaCategoria UNIQUEINSTANCE;
+    private static JDGBuscaCategoria uniqueInstance;
 
     private Categoria objetoCategoria;
     private final ControleVisao controladorVisao;
@@ -31,12 +32,12 @@ public class JDGBuscaCategoria extends javax.swing.JDialog {
     }
 
     public static synchronized JDGBuscaCategoria getInstance(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
-        if (UNIQUEINSTANCE == null) {
-            UNIQUEINSTANCE = new JDGBuscaCategoria(parent, modal, controlador);
+        if (uniqueInstance == null) {
+            uniqueInstance = new JDGBuscaCategoria(parent, modal, controlador);
         }
 
-        UNIQUEINSTANCE.setModal(modal);
-        return UNIQUEINSTANCE;
+        uniqueInstance.setModal(modal);
+        return uniqueInstance;
     }
 
     /**
@@ -182,10 +183,10 @@ public class JDGBuscaCategoria extends javax.swing.JDialog {
         DefaultTableModel tabela = (DefaultTableModel) tblCategoria.getModel();
 
         if (tblCategoria.getSelectedRow() > -1) {
-            if (controladorVisao.getControleDominio().produtoReadCategoria(resultadoBusca.get(tblCategoria.getSelectedRow())).size() > 0) {
+            if (controladorVisao.getControleDominio().produtoReadCategoria(resultadoBusca.get(tblCategoria.getSelectedRow())).isEmpty()) {
                 JOptionPane.showMessageDialog(this, "O produto selecionado não pode ser excluído por estar fora da loja.");
             } else {
-                controladorVisao.getControleDominio().categoriaDelete(((Categoria) resultadoBusca.get(tblCategoria.getSelectedRow())));
+                controladorVisao.getControleDominio().categoriaDelete(resultadoBusca.get(tblCategoria.getSelectedRow()));
                 tabela.removeRow(tblCategoria.getSelectedRow());
                 JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Delete", JOptionPane.INFORMATION_MESSAGE);
             }
@@ -226,7 +227,7 @@ public class JDGBuscaCategoria extends javax.swing.JDialog {
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         if (tblCategoria.getSelectedRow() > -1) {
             DefaultTableModel tabela = (DefaultTableModel) tblCategoria.getModel();
-            objetoCategoria = (Categoria) resultadoBusca.get(tblCategoria.getSelectedRow());
+            objetoCategoria = resultadoBusca.get(tblCategoria.getSelectedRow());
             tabela.setRowCount(0);
             this.dispose();
         } else {

@@ -8,9 +8,10 @@ package vision;
 import control.ControleVisao;
 import domain.Cliente;
 import domain.state.aluguel.Fechado;
-import java.util.List;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 /**
  *
@@ -18,7 +19,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JDGBuscaCliente extends javax.swing.JDialog {
 
-    private static JDGBuscaCliente UNIQUEINSTANCE;
+    private static JDGBuscaCliente uniqueInstance;
 
     private Cliente objetoCliente;
     private final ControleVisao controladorVisao;
@@ -32,12 +33,12 @@ public class JDGBuscaCliente extends javax.swing.JDialog {
     }
 
     public static synchronized JDGBuscaCliente getInstance(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
-        if (UNIQUEINSTANCE == null) {
-            UNIQUEINSTANCE = new JDGBuscaCliente(parent, modal, controlador);
+        if (uniqueInstance == null) {
+            uniqueInstance = new JDGBuscaCliente(parent, modal, controlador);
         }
 
-        UNIQUEINSTANCE.setModal(modal);
-        return UNIQUEINSTANCE;
+        uniqueInstance.setModal(modal);
+        return uniqueInstance;
     }
 
     /**
@@ -204,7 +205,7 @@ public class JDGBuscaCliente extends javax.swing.JDialog {
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         if (tblNome.getSelectedRow() > -1) {
             DefaultTableModel tabela = (DefaultTableModel) tblNome.getModel();
-            objetoCliente = (Cliente) resultadoBusca.get(tblNome.getSelectedRow());
+            objetoCliente = resultadoBusca.get(tblNome.getSelectedRow());
             tabela.setRowCount(0);
             this.dispose();
         } else {
@@ -221,7 +222,7 @@ public class JDGBuscaCliente extends javax.swing.JDialog {
             if (controladorVisao.getControleDominio().aluguelReadIndireto(objetoCliente, Fechado.getInstance()).size() > 0) {
                 JOptionPane.showMessageDialog(this, "O cliente selecionado não pode ser excluído por conter pendências.");
             } else {
-                controladorVisao.getControleDominio().clienteDelete(((Cliente) resultadoBusca.get(tblNome.getSelectedRow())));
+                controladorVisao.getControleDominio().clienteDelete(resultadoBusca.get(tblNome.getSelectedRow()));
                 tabela.removeRow(tblNome.getSelectedRow());
                 JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Delete", JOptionPane.INFORMATION_MESSAGE);
             }

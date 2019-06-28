@@ -5,10 +5,11 @@
  */
 package dao;
 
-import java.util.List;
-import javax.persistence.criteria.CriteriaQuery;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+
+import javax.persistence.criteria.CriteriaQuery;
+import java.util.List;
 
 /**
  *
@@ -16,7 +17,7 @@ import org.hibernate.Session;
  */
 public class GenericDAO {
 
-    public void create_update(Object obj) throws HibernateException {
+    public void createUpdate(Object obj) {
 
         Session sessao = null;
 
@@ -40,7 +41,7 @@ public class GenericDAO {
 
     }
 
-    public List read(Class classe) throws HibernateException {
+    public List read(Class classe) {
 
         List lista = null;
         Session sessao = null;
@@ -69,7 +70,7 @@ public class GenericDAO {
         return lista;
     }
 
-    public void delete(Object obj) throws HibernateException {
+    public void delete(Object obj) {
         Session sessao = null;
 
         try {

@@ -9,9 +9,10 @@ import control.ControleVisao;
 import domain.Categoria;
 import domain.Produto;
 import domain.state.produto.EmAluguel;
-import java.util.List;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 /**
  *
@@ -19,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class JDGBuscaProduto extends javax.swing.JDialog {
 
-    private static JDGBuscaProduto UNIQUEINSTANCE;
+    private static JDGBuscaProduto uniqueInstance;
 
     private final ControleVisao controladorVisao;
     private List<Produto> resultadoBusca;
@@ -32,12 +33,12 @@ public class JDGBuscaProduto extends javax.swing.JDialog {
     }
 
     public static synchronized JDGBuscaProduto getInstance(java.awt.Frame parent, boolean modal, ControleVisao controlador) {
-        if (UNIQUEINSTANCE == null) {
-            UNIQUEINSTANCE = new JDGBuscaProduto(parent, modal, controlador);
+        if (uniqueInstance == null) {
+            uniqueInstance = new JDGBuscaProduto(parent, modal, controlador);
         }
 
-        UNIQUEINSTANCE.setModal(modal);
-        return UNIQUEINSTANCE;
+        uniqueInstance.setModal(modal);
+        return uniqueInstance;
     }
 
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -287,7 +288,7 @@ public class JDGBuscaProduto extends javax.swing.JDialog {
     private void btnSelecionarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSelecionarActionPerformed
         if (tblProduto.getSelectedRow() > -1) {
             DefaultTableModel tabela = (DefaultTableModel) tblProduto.getModel();
-            objetoProduto = (Produto) resultadoBusca.get(tblProduto.getSelectedRow());
+            objetoProduto = resultadoBusca.get(tblProduto.getSelectedRow());
             tabela.setRowCount(0);
             this.dispose();
         } else {
@@ -302,7 +303,7 @@ public class JDGBuscaProduto extends javax.swing.JDialog {
             if (controladorVisao.getControleDominio().produtoReadEstado(EmAluguel.getInstance()).size() > 0) {
                 JOptionPane.showMessageDialog(this, "O produto selecionado não pode ser excluído por estar fora da loja.");
             } else {
-                controladorVisao.getControleDominio().produtoDelete(((Produto) resultadoBusca.get(tblProduto.getSelectedRow())));
+                controladorVisao.getControleDominio().produtoDelete(resultadoBusca.get(tblProduto.getSelectedRow()));
                 tabela.removeRow(tblProduto.getSelectedRow());
                 JOptionPane.showMessageDialog(this, "Registro excluído com sucesso!", "Delete", JOptionPane.INFORMATION_MESSAGE);
 

@@ -6,8 +6,8 @@
 package dao;
 
 import org.hibernate.HibernateException;
-import org.hibernate.cfg.Configuration;
 import org.hibernate.SessionFactory;
+import org.hibernate.cfg.Configuration;
 
 /**
  * Hibernate Utility class with a convenient method to get Session Factory
@@ -16,6 +16,10 @@ import org.hibernate.SessionFactory;
  * @author guzuc
  */
 public class ConexaoHibernate {
+
+    private ConexaoHibernate() {
+
+    }
 
     private static final SessionFactory SESSIONFACTORY;
 
@@ -26,7 +30,6 @@ public class ConexaoHibernate {
             SESSIONFACTORY = new Configuration().configure().buildSessionFactory();
         } catch (HibernateException ex) {
             // Log the exception. 
-            System.err.println("Initial SessionFactory creation failed." + ex);
             throw new ExceptionInInitializerError(ex);
         }
     }

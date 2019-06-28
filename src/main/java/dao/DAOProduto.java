@@ -8,12 +8,13 @@ package dao;
 import domain.Categoria;
 import domain.Produto;
 import domain.state.produto.EstadoProduto;
-import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import java.util.List;
 
 /**
  *
@@ -21,17 +22,17 @@ import org.hibernate.Session;
  */
 public class DAOProduto extends GenericDAO {
 
-    private static DAOProduto UNIQUEINSTANCE;
+    private static DAOProduto uniqueInstance;
 
     private DAOProduto() {
     }
 
     public static synchronized DAOProduto getInstance() {
-        if (UNIQUEINSTANCE == null) {
-            UNIQUEINSTANCE = new DAOProduto();
+        if (uniqueInstance == null) {
+            uniqueInstance = new DAOProduto();
         }
 
-        return UNIQUEINSTANCE;
+        return uniqueInstance;
     }
 
     public List<Produto> readEstado(EstadoProduto estado) {

@@ -6,12 +6,13 @@
 package dao;
 
 import domain.Cliente;
-import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import java.util.List;
 
 /**
  *
@@ -19,17 +20,17 @@ import org.hibernate.Session;
  */
 public class DAOCliente extends GenericDAO {
 
-    private static DAOCliente UNIQUEINSTANCE;
+    private static DAOCliente uniqueInstance;
 
     private DAOCliente() {
     }
 
     public static synchronized DAOCliente getInstance() {
-        if (UNIQUEINSTANCE == null) {
-            UNIQUEINSTANCE = new DAOCliente();
+        if (uniqueInstance == null) {
+            uniqueInstance = new DAOCliente();
         }
 
-        return UNIQUEINSTANCE;
+        return uniqueInstance;
     }
 
     public List<Cliente> readNome(String nome) {

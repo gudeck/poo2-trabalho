@@ -5,11 +5,13 @@
  */
 package control;
 
-import domain.*;
-import java.util.List;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
+import domain.Categoria;
+import domain.Cliente;
+import domain.Produto;
 import vision.*;
+
+import javax.swing.*;
+import java.util.List;
 
 /**
  *
@@ -17,7 +19,7 @@ import vision.*;
  */
 public class ControleVisao {
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
 
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -40,7 +42,6 @@ public class ControleVisao {
         ControleVisao visaoCtrl = new ControleVisao();
         visaoCtrl.janelaPrincipal();
 
-//        System.exit(0);
     }
 
     private ControleDominio dominioCtlr;

@@ -5,18 +5,11 @@
  */
 package domain;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 /**
  *
@@ -25,8 +18,8 @@ import javax.persistence.TemporalType;
 @Entity
 public class Cliente implements Serializable {
 
-    public Cliente() {
-    }
+    @OneToMany(mappedBy = "cliente")
+    private List<Aluguel> alugueis = new ArrayList<>();
 
     /* Dominio do Clinte */
     @Id
@@ -56,8 +49,9 @@ public class Cliente implements Serializable {
     @Column(nullable = true)
     private String email;
 
-    @OneToMany(mappedBy = "cliente")
-    List<Aluguel> alugueis = new ArrayList<>();
+    public Cliente() {
+        // Construtor vazio pra uso do Hibernate
+    }
 
     @Override
     public String toString() {

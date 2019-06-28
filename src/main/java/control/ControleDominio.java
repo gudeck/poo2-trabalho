@@ -5,11 +5,7 @@
  */
 package control;
 
-import dao.DAOAluguel;
-import dao.DAOCategoria;
-import dao.DAOCliente;
-import dao.DAOProduto;
-import dao.GenericDAO;
+import dao.*;
 import domain.Aluguel;
 import domain.Categoria;
 import domain.Cliente;
@@ -18,11 +14,8 @@ import domain.state.aluguel.EmAberto;
 import domain.state.aluguel.EstadoAluguel;
 import domain.state.aluguel.Fechado;
 import domain.state.aluguel.NaoRetirado;
-import domain.state.produto.DanoPermanente;
-import domain.state.produto.EmAluguel;
-import domain.state.produto.EmLoja;
-import domain.state.produto.EmManutencao;
-import domain.state.produto.EstadoProduto;
+import domain.state.produto.*;
+
 import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
@@ -41,14 +34,14 @@ public class ControleDominio {
         dao.ConexaoHibernate.getSESSIONFACTORY();
         genericDao = new GenericDAO();
 
-        genericDao.create_update(EmAberto.getInstance());
-        genericDao.create_update(Fechado.getInstance());
-        genericDao.create_update(NaoRetirado.getInstance());
+        genericDao.createUpdate(EmAberto.getInstance());
+        genericDao.createUpdate(Fechado.getInstance());
+        genericDao.createUpdate(NaoRetirado.getInstance());
 
-        genericDao.create_update(DanoPermanente.getInstance());
-        genericDao.create_update(EmAluguel.getInstance());
-        genericDao.create_update(EmLoja.getInstance());
-        genericDao.create_update(EmManutencao.getInstance());
+        genericDao.createUpdate(DanoPermanente.getInstance());
+        genericDao.createUpdate(EmAluguel.getInstance());
+        genericDao.createUpdate(EmLoja.getInstance());
+        genericDao.createUpdate(EmManutencao.getInstance());
     }
 
     public static ControleDominio getInstance() {
@@ -74,7 +67,7 @@ public class ControleDominio {
         cliente.setTelefone(telefone);
         cliente.setSexo(sexo);
 
-        genericDao.create_update(cliente);
+        genericDao.createUpdate(cliente);
     }
 
     public List<Cliente> clienteReadAll() {
@@ -97,7 +90,7 @@ public class ControleDominio {
         cliente.setTelefone(telefone);
         cliente.setSexo(sexo);
 
-        genericDao.create_update(cliente);
+        genericDao.createUpdate(cliente);
     }
 
     public void clienteDelete(Cliente cliente) {
@@ -116,7 +109,7 @@ public class ControleDominio {
         categoria.setNome(nome);
         categoria.setDescricao(descricao);
 
-        genericDao.create_update(categoria);
+        genericDao.createUpdate(categoria);
     }
 
     public List<Categoria> categoriaReadAll() {
@@ -131,7 +124,7 @@ public class ControleDominio {
         categoria.setNome(nome);
         categoria.setDescricao(descricao);
 
-        genericDao.create_update(categoria);
+        genericDao.createUpdate(categoria);
     }
 
     public void categoriaDelete(Categoria categoria) {
@@ -153,7 +146,7 @@ public class ControleDominio {
         produto.setDescricao(descricao);
         produto.setEstado(EmLoja.getInstance());
 
-        genericDao.create_update(produto);
+        genericDao.createUpdate(produto);
     }
 
     public List<Produto> produtoReadAll() {
@@ -172,11 +165,11 @@ public class ControleDominio {
         produto.setDescricao(descricao);
         produto.setEstado(estado);
 
-        genericDao.create_update(produto);
+        genericDao.createUpdate(produto);
     }
 
     public void produtoUpdate(Produto produto) {
-        genericDao.create_update(produto);
+        genericDao.createUpdate(produto);
     }
 
     public void produtoDelete(Produto produto) {
@@ -208,23 +201,21 @@ public class ControleDominio {
         aluguel.setValorTotal(Double.valueOf(valorTotal));
         aluguel.setEstado(NaoRetirado.getInstance());
 
-        listaProdutos.forEach((p) -> {
+        listaProdutos.forEach(p -> {
             p.setEstado(p.getEstado().setEmAluguel());
-            genericDao.create_update(p);
+            genericDao.createUpdate(p);
         });
 
         aluguel.setProdutosAlugados(listaProdutos);
 
-        genericDao.create_update(aluguel);
+        genericDao.createUpdate(aluguel);
     }
 
     public void aluguelUpdate(Aluguel aluguel) {
 
-        aluguel.getProdutosAlugados().forEach((pa) -> {
-            genericDao.create_update(pa);
-        });
+        aluguel.getProdutosAlugados().forEach(genericDao::createUpdate);
 
-        genericDao.create_update(aluguel);
+        genericDao.createUpdate(aluguel);
     }
 
     public List<Aluguel> aluguelReadIndireto(Cliente cliente, EstadoAluguel estado) {

@@ -8,12 +8,13 @@ package dao;
 import domain.Aluguel;
 import domain.Cliente;
 import domain.state.aluguel.EstadoAluguel;
-import java.util.List;
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import java.util.List;
 
 /**
  *
@@ -21,17 +22,17 @@ import org.hibernate.Session;
  */
 public class DAOAluguel extends GenericDAO {
 
-    private static DAOAluguel UNIQUEINSTANCE;
+    private static DAOAluguel uniqueInstance;
 
     private DAOAluguel() {
     }
 
     public static synchronized DAOAluguel getInstance() {
-        if (UNIQUEINSTANCE == null) {
-            UNIQUEINSTANCE = new DAOAluguel();
+        if (uniqueInstance == null) {
+            uniqueInstance = new DAOAluguel();
         }
 
-        return UNIQUEINSTANCE;
+        return uniqueInstance;
     }
 
     public List<Aluguel> readEstadoIndireto(Cliente cliente, EstadoAluguel estado) {
@@ -99,7 +100,7 @@ public class DAOAluguel extends GenericDAO {
 
             throw new HibernateException(ex);
         }
-        if (lista.size() > 0) {
+        if (lista.isEmpty()) {
             return (Aluguel) lista.get(0);
         } else {
             return null;

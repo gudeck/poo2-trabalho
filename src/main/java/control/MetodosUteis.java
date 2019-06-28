@@ -14,19 +14,23 @@ import java.text.SimpleDateFormat;
  */
 public class MetodosUteis {
 
-    public static java.sql.Date stringTOsqlDate(String data) throws ParseException {
-        SimpleDateFormat formatPattern = new SimpleDateFormat("dd/MM/yyyy");
-        java.util.Date javaDate = formatPattern.parse(data);
-        java.sql.Date sqlDate = new java.sql.Date(javaDate.getTime());
+    private static String padrao = "dd/MM/yyyy";
 
-        return sqlDate;
+    private MetodosUteis() {
+        // Classe com métodos abstratos, não precisa ser instanciada.
+    }
+    
+    public static java.sql.Date stringTOsqlDate(String data) throws ParseException {
+        SimpleDateFormat formatPattern = new SimpleDateFormat(padrao);
+        java.util.Date javaDate = formatPattern.parse(data);
+
+        return new java.sql.Date(javaDate.getTime());
     }
 
     public static java.util.Date stringTOjavaDate(String data) throws ParseException {
-        SimpleDateFormat formatPattern = new SimpleDateFormat("dd/MM/yyyy");
-        java.util.Date javaDate = formatPattern.parse(data);
+        SimpleDateFormat formatPattern = new SimpleDateFormat(padrao);
 
-        return javaDate;
+        return formatPattern.parse(data);
     }
 
     public static java.sql.Date javaDateTOsqlDate(java.util.Date data) {
@@ -35,7 +39,7 @@ public class MetodosUteis {
 
     public static String javaDateTOstring(java.util.Date data) {
 
-        SimpleDateFormat formatPattern = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat formatPattern = new SimpleDateFormat(padrao);
         return formatPattern.format(data);
     }
 
