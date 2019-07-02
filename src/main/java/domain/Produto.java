@@ -17,13 +17,13 @@ import java.io.Serializable;
 @Entity
 public class Produto implements Serializable {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer codProduto;
-
     public Produto() {
         // Construtor vazio pra uso do Hibernate
     }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer codProduto;
 
     @Column(nullable = false)
     private String nome;

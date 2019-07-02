@@ -17,11 +17,11 @@ import java.util.List;
  */
 @Entity
 public class Cliente implements Serializable {
-
-    @OneToMany(mappedBy = "cliente")
-    private List<Aluguel> alugueis = new ArrayList<>();
-
-    /* Dominio do Clinte */
+	
+    public Cliente() {
+        // Construtor vazio pra uso do Hibernate
+    }
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(updatable = false)
@@ -49,9 +49,8 @@ public class Cliente implements Serializable {
     @Column(nullable = true)
     private String email;
 
-    public Cliente() {
-        // Construtor vazio pra uso do Hibernate
-    }
+    @OneToMany(mappedBy = "cliente")
+    private List<Aluguel> alugueis = new ArrayList<>();
 
     @Override
     public String toString() {

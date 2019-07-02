@@ -17,6 +17,10 @@ import java.util.List;
 @Entity
 public class Categoria implements Serializable {
 
+    public Categoria() {
+        // Construtor vazio pra uso do Hibernate
+    }
+
     @OneToMany(mappedBy = "categoria")
     private List<Produto> listaProdutos = new ArrayList<>();
 
@@ -29,10 +33,6 @@ public class Categoria implements Serializable {
 
     @Column(nullable = false)
     private String descricao;
-
-    public Categoria() {
-        // Construtor vazio pra uso do Hibernate
-    }
 
     @Override
     public String toString() {
