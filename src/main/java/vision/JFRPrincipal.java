@@ -6,6 +6,10 @@
 package vision;
 
 import control.ControleVisao;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  *
@@ -132,6 +136,17 @@ public class JFRPrincipal extends javax.swing.JFrame {
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
+        
+        mnNewMenu = new JMenu("Relatórios");
+        jMenuBar1.add(mnNewMenu);
+        
+        mntmNewMenuItem = new JMenuItem("Aluguéis");
+        mntmNewMenuItem.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		controladorVisao.relatorioAlugueis();
+        	}
+        });
+        mnNewMenu.add(mntmNewMenuItem);
 
         getAccessibleContext().setAccessibleName("Anarrie");
 
@@ -180,5 +195,7 @@ public class JFRPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem mnuiCadastroCategoria;
     private javax.swing.JMenuItem mnuiCadastroCliente;
     private javax.swing.JMenuItem mnuiCadastroProduto;
+    private JMenu mnNewMenu;
+    private JMenuItem mntmNewMenuItem;
     // End of variables declaration//GEN-END:variables
 }

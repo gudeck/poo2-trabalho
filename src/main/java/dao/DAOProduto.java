@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author gudeck
  */
-public class DAOProduto extends GenericDAO {
+public class DAOProduto{
 
     private static DAOProduto uniqueInstance;
 

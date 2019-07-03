@@ -45,10 +45,12 @@ public class ControleVisao {
     }
 
     private ControleDominio dominioCtlr;
+    private ControleRelatorio relatorioCtlr;
     private JFRPrincipal janelaPrincipal;
 
     public ControleVisao() {
         dominioCtlr = ControleDominio.getInstance();
+        relatorioCtlr = ControleRelatorio.getInstance();
     }
 
     public ControleDominio getControleDominio() {
@@ -145,5 +147,9 @@ public class ControleVisao {
         combo.setModel(new DefaultComboBoxModel(lista.toArray()));
 
     }
+
+	public void relatorioAlugueis() {
+		relatorioCtlr.relatorioAlugueis();
+	}
 
 }

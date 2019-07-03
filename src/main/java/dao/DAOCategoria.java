@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author gudeck
  */
-public class DAOCategoria extends GenericDAO {
+public class DAOCategoria {
 
     private static DAOCategoria uniqueInstance;
 

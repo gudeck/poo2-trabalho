@@ -18,7 +18,7 @@ import java.util.List;
  *
  * @author gudeck
  */
-public class DAOCliente extends GenericDAO {
+public class DAOCliente{
 
     private static DAOCliente uniqueInstance;
 

@@ -20,7 +20,7 @@ import java.util.List;
  *
  * @author gudeck
  */
-public class DAOAluguel extends GenericDAO {
+public class DAOAluguel{
 
     private static DAOAluguel uniqueInstance;
 

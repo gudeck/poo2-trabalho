@@ -5,17 +5,28 @@
  */
 package dao;
 
-import org.hibernate.HibernateException;
-import org.hibernate.Session;
+import java.util.List;
 
 import javax.persistence.criteria.CriteriaQuery;
-import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
 
 /**
  *
  * @author jeanglazar
  */
 public class GenericDAO {
+	
+	private static final GenericDAO UNIQUEINSTANCE = new GenericDAO();
+
+    private GenericDAO() {
+    	
+    }
+
+    public static GenericDAO getInstance() {
+        return UNIQUEINSTANCE;
+    }
 
     public void createUpdate(Object obj) {
 

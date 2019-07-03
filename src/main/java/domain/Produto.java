@@ -44,9 +44,6 @@ public class Produto implements Serializable {
     @Column(nullable = false)
     private Double valorDanoPermanente;
 
-    @Column(nullable = false)
-    private boolean danoPermanente;
-
     @ManyToOne
     @JoinColumn(name = "codCategoria", nullable = false)
     private Categoria categoria;
@@ -111,15 +108,7 @@ public class Produto implements Serializable {
     public void setValorDanoPermanente(Double valorDanoPermanente) {
         this.valorDanoPermanente = valorDanoPermanente;
     }
-
-    public boolean getDanoPermanente() {
-        return danoPermanente;
-    }
-
-    public void setDanoPermanente(Boolean danoPermanente) {
-        this.danoPermanente = danoPermanente;
-    }
-
+    
     public Categoria getCategoria() {
         return categoria;
     }

@@ -32,7 +32,7 @@ public class ControleDominio {
     private ControleDominio() {
 
         dao.ConexaoHibernate.getSESSIONFACTORY();
-        genericDao = new GenericDAO();
+        genericDao = GenericDAO.getInstance();
 
         genericDao.createUpdate(EmAberto.getInstance());
         genericDao.createUpdate(Fechado.getInstance());

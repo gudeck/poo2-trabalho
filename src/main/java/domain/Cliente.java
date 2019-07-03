@@ -49,7 +49,7 @@ public class Cliente implements Serializable {
     @Column(nullable = true)
     private String email;
 
-    @OneToMany(mappedBy = "cliente")
+    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
     private List<Aluguel> alugueis = new ArrayList<>();
 
     @Override
