@@ -6,17 +6,16 @@
 package vision;
 
 import control.ControleVisao;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 /**
  *
- * @author gudeck
+ * @author guzuc
  */
 public class JFRPrincipal extends javax.swing.JFrame {
 
+    /**
+     * Creates new form JFRPrincipal
+     */
     private final ControleVisao controladorVisao;
 
     public JFRPrincipal(ControleVisao controlador) {
@@ -33,169 +32,168 @@ public class JFRPrincipal extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        mnuiCadastroCliente = new javax.swing.JMenuItem();
-        mnuiCadastroCategoria = new javax.swing.JMenuItem();
-        mnuiCadastroProduto = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuItem5 = new javax.swing.JMenuItem();
+        jMenuItem6 = new javax.swing.JMenuItem();
+        jMenuItem7 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        mniRegistrarReserva = new javax.swing.JMenuItem();
-        mniRegistrarRetirada = new javax.swing.JMenuItem();
-        mniRegistrarDevolucao = new javax.swing.JMenuItem();
-        mniRegistrarManutenção = new javax.swing.JMenuItem();
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        jMenuItem8 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Anarriê");
-        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setResizable(false);
-        setSize(new java.awt.Dimension(562, 280));
-        getContentPane().setLayout(null);
+        setPreferredSize(new java.awt.Dimension(560, 302));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/imagens/Sem título.png"))); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 560, 280);
+        jLabel1.setPreferredSize(new java.awt.Dimension(560, 280));
 
         jMenu1.setText("Cadastro");
 
-        mnuiCadastroCliente.setText("Cliente");
-        mnuiCadastroCliente.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem1.setText("Cliente");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuiCadastroClienteActionPerformed(evt);
+                jMenuItem1ActionPerformed(evt);
             }
         });
-        jMenu1.add(mnuiCadastroCliente);
+        jMenu1.add(jMenuItem1);
 
-        mnuiCadastroCategoria.setText("Categoria");
-        mnuiCadastroCategoria.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem2.setText("Categoria");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuiCadastroCategoriaActionPerformed(evt);
+                jMenuItem2ActionPerformed(evt);
             }
         });
-        jMenu1.add(mnuiCadastroCategoria);
+        jMenu1.add(jMenuItem2);
 
-        mnuiCadastroProduto.setText("Produto");
-        mnuiCadastroProduto.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem3.setText("Produto");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mnuiCadastroProdutoActionPerformed(evt);
+                jMenuItem3ActionPerformed(evt);
             }
         });
-        jMenu1.add(mnuiCadastroProduto);
+        jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
 
-        jMenu3.setText("Registros");
+        jMenu2.setText("Registro");
 
-        mniRegistrarReserva.setText("Reserva");
-        mniRegistrarReserva.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem4.setText("Reserva");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mniRegistrarReservaActionPerformed(evt);
+                jMenuItem4ActionPerformed(evt);
             }
         });
-        jMenu3.add(mniRegistrarReserva);
+        jMenu2.add(jMenuItem4);
 
-        mniRegistrarRetirada.setText("Retirada");
-        mniRegistrarRetirada.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem5.setText("Retirada");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mniRegistrarRetiradaActionPerformed(evt);
+                jMenuItem5ActionPerformed(evt);
             }
         });
-        jMenu3.add(mniRegistrarRetirada);
+        jMenu2.add(jMenuItem5);
 
-        mniRegistrarDevolucao.setText("Devolução");
-        mniRegistrarDevolucao.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem6.setText("Devolução");
+        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mniRegistrarDevolucaoActionPerformed(evt);
+                jMenuItem6ActionPerformed(evt);
             }
         });
-        jMenu3.add(mniRegistrarDevolucao);
+        jMenu2.add(jMenuItem6);
 
-        mniRegistrarManutenção.setText("Manutenção");
-        mniRegistrarManutenção.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItem7.setText("Manutenção");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                mniRegistrarManutençãoActionPerformed(evt);
+                jMenuItem7ActionPerformed(evt);
             }
         });
-        jMenu3.add(mniRegistrarManutenção);
+        jMenu2.add(jMenuItem7);
+
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Relatório");
+
+        jMenuItem8.setText("Aluguéis");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem8);
 
         jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
-        
-        mnNewMenu = new JMenu("Relatórios");
-        jMenuBar1.add(mnNewMenu);
-        
-        mntmNewMenuItem = new JMenuItem("Aluguéis");
-        mntmNewMenuItem.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent arg0) {
-        		controladorVisao.relatorioAlugueis();
-        	}
-        });
-        mnNewMenu.add(mntmNewMenuItem);
 
-        getAccessibleContext().setAccessibleName("Anarrie");
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void mnuiCadastroClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiCadastroClienteActionPerformed
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         controladorVisao.cadastroCliente();
-    }//GEN-LAST:event_mnuiCadastroClienteActionPerformed
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void mnuiCadastroCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiCadastroCategoriaActionPerformed
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         controladorVisao.cadastroCategoria();
-    }//GEN-LAST:event_mnuiCadastroCategoriaActionPerformed
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void mniRegistrarReservaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniRegistrarReservaActionPerformed
-        controladorVisao.registrarReserva();
-    }//GEN-LAST:event_mniRegistrarReservaActionPerformed
-
-    private void mniRegistrarRetiradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniRegistrarRetiradaActionPerformed
-        controladorVisao.registrarRetirada();
-    }//GEN-LAST:event_mniRegistrarRetiradaActionPerformed
-
-    private void mniRegistrarDevolucaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniRegistrarDevolucaoActionPerformed
-        controladorVisao.registrarDevolucao();
-    }//GEN-LAST:event_mniRegistrarDevolucaoActionPerformed
-
-    private void mniRegistrarManutençãoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mniRegistrarManutençãoActionPerformed
-        controladorVisao.registrarAvaliacaoProduto();
-    }//GEN-LAST:event_mniRegistrarManutençãoActionPerformed
-
-    private void mnuiCadastroProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuiCadastroProdutoActionPerformed
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         controladorVisao.cadastroProduto();
-    }//GEN-LAST:event_mnuiCadastroProdutoActionPerformed
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        controladorVisao.registrarReserva();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        controladorVisao.registrarRetirada();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+        controladorVisao.registrarDevolucao();
+    }//GEN-LAST:event_jMenuItem6ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        controladorVisao.registrarAvaliacaoProduto();
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        controladorVisao.relatorioAlugueis();
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JMenuItem mniRegistrarDevolucao;
-    private javax.swing.JMenuItem mniRegistrarManutenção;
-    private javax.swing.JMenuItem mniRegistrarReserva;
-    private javax.swing.JMenuItem mniRegistrarRetirada;
-    private javax.swing.JMenuItem mnuiCadastroCategoria;
-    private javax.swing.JMenuItem mnuiCadastroCliente;
-    private javax.swing.JMenuItem mnuiCadastroProduto;
-    private JMenu mnNewMenu;
-    private JMenuItem mntmNewMenuItem;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem5;
+    private javax.swing.JMenuItem jMenuItem6;
+    private javax.swing.JMenuItem jMenuItem7;
+    private javax.swing.JMenuItem jMenuItem8;
     // End of variables declaration//GEN-END:variables
 }

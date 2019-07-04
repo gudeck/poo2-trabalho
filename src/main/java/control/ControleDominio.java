@@ -5,9 +5,9 @@
  */
 package control;
 
+import domain.Categoria;
 import dao.*;
 import domain.Aluguel;
-import domain.Categoria;
 import domain.Cliente;
 import domain.Produto;
 import domain.state.aluguel.EmAberto;

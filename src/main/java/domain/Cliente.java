@@ -17,116 +17,116 @@ import java.util.List;
  */
 @Entity
 public class Cliente implements Serializable {
-	
-    public Cliente() {
-        // Construtor vazio pra uso do Hibernate
-    }
-	
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(updatable = false)
-    private Integer codCliente;
 
-    @Column(nullable = false)
-    private String nome;
+	public Cliente() {
+		// Construtor vazio pra uso do Hibernate
+	}
 
-    @Column(nullable = false, updatable = false, length = 11, unique = true)
-    private String cpf;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(updatable = false)
+	private Integer codCliente;
 
-    @Column(nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date dataNascimento;
+	@Column(nullable = false)
+	private String nome;
 
-    @Column(nullable = false)
-    private Character sexo;
+	@Column(nullable = false, updatable = false, length = 11, unique = true)
+	private String cpf;
 
-    @Column(nullable = false)
-    private String endereco;
+	@Column(nullable = false)
+	@Temporal(TemporalType.DATE)
+	private Date dataNascimento;
 
-    @Column(nullable = false, length = 11)
-    private String telefone;
+	@Column(nullable = false)
+	private Character sexo;
 
-    @Column(nullable = true)
-    private String email;
+	@Column(nullable = false)
+	private String endereco;
 
-    @OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
-    private List<Aluguel> alugueis = new ArrayList<>();
+	@Column(nullable = false, length = 11)
+	private String telefone;
 
-    @Override
-    public String toString() {
-        return nome;
-    }
+	@Column(nullable = true)
+	private String email;
 
-    public Integer getCodCliente() {
-        return codCliente;
-    }
+	@OneToMany(mappedBy = "cliente", fetch = FetchType.EAGER)
+	private List<Aluguel> alugueis = new ArrayList<>();
 
-    public void setCodCliente(Integer codCliente) {
-        this.codCliente = codCliente;
-    }
+	@Override
+	public String toString() {
+		return this.nome;
+	}
 
-    public String getNome() {
-        return nome;
-    }
+	public Integer getCodCliente() {
+		return codCliente;
+	}
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
+	public void setCodCliente(Integer codCliente) {
+		this.codCliente = codCliente;
+	}
 
-    public String getCpf() {
-        return cpf;
-    }
+	public String getNome() {
+		return nome;
+	}
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
+	public String getCpf() {
+		return cpf;
+	}
 
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
 
-    public Character getSexo() {
-        return sexo;
-    }
+	public Date getDataNascimento() {
+		return dataNascimento;
+	}
 
-    public void setSexo(Character sexo) {
-        this.sexo = sexo;
-    }
+	public void setDataNascimento(Date dataNascimento) {
+		this.dataNascimento = dataNascimento;
+	}
 
-    public String getEndereco() {
-        return endereco;
-    }
+	public Character getSexo() {
+		return sexo;
+	}
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
-    }
+	public void setSexo(Character sexo) {
+		this.sexo = sexo;
+	}
 
-    public String getTelefone() {
-        return telefone;
-    }
+	public String getEndereco() {
+		return endereco;
+	}
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
-    }
+	public void setEndereco(String endereco) {
+		this.endereco = endereco;
+	}
 
-    public String getEmail() {
-        return email;
-    }
+	public String getTelefone() {
+		return telefone;
+	}
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
 
-    public List<Aluguel> getAlugueis() {
-        return alugueis;
-    }
+	public String getEmail() {
+		return email;
+	}
 
-    public void setAlugueis(List<Aluguel> alugueis) {
-        this.alugueis = alugueis;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public List<Aluguel> getAlugueis() {
+		return alugueis;
+	}
+
+	public void setAlugueis(List<Aluguel> alugueis) {
+		this.alugueis = alugueis;
+	}
 
 }

@@ -5,12 +5,14 @@
  */
 package control;
 
-import domain.Categoria;
 import domain.Cliente;
 import domain.Produto;
 import vision.*;
 
 import javax.swing.*;
+
+import domain.Categoria;
+
 import java.util.List;
 
 /**

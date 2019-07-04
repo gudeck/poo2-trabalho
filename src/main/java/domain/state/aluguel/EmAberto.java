@@ -41,4 +41,11 @@ public class EmAberto extends EstadoAluguel {
 
         private static final EmAberto INSTANCE = new EmAberto();
     }
+
+	@Override
+	public String toString() {
+		return "Em Aberto";
+	}
+    
+    
 }

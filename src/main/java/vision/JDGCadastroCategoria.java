@@ -7,6 +7,7 @@ package vision;
 
 import control.ControleVisao;
 import domain.Categoria;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 

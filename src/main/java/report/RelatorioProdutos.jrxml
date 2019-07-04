@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="RelatorioProdutos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2526b4a9-cbf9-4bdc-a0e3-1a47102e86a3">
+	<parameter name="ListaProdutos" class="domain.Produto" isForPrompting="false"/>
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="tamanho" class="java.lang.String">
+		<fieldDescription><![CDATA[tamanho]]></fieldDescription>
+	</field>
+	<field name="categoria" class="domain.Categoria">
+		<fieldDescription><![CDATA[categoria]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[nome]]></fieldDescription>
+	</field>
+	<field name="descricao" class="java.lang.String">
+		<fieldDescription><![CDATA[descricao]]></fieldDescription>
+	</field>
+	<columnHeader>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="10" y="10" width="100" height="15" uuid="338b2d23-3293-423c-8056-5292ba535b16">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e90b7f6d-97a5-4f6a-9c74-7bc89ce8effa"/>
+				</reportElement>
+				<text><![CDATA[Nome]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="110" y="10" width="50" height="15" uuid="1aada661-2976-4284-8ce4-53799023a0d5">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0367ce44-fe07-4b24-832d-1116f3f9e123"/>
+				</reportElement>
+				<text><![CDATA[Tamanho]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="160" y="10" width="50" height="15" uuid="01e7b25c-9191-4b36-9725-d352c1615050">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="65df36e3-5f4a-4650-9458-4d51e96857da"/>
+				</reportElement>
+				<text><![CDATA[Categoria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="210" y="10" width="150" height="15" uuid="99f8703a-afd8-490b-ad46-28a259b853aa">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75064bee-8651-4534-9528-1d92345dfbd5"/>
+				</reportElement>
+				<text><![CDATA[Descrição]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="10" y="10" width="100" height="15" uuid="8157b037-1294-426e-9250-7c0e92fcf989">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e90b7f6d-97a5-4f6a-9c74-7bc89ce8effa"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{nome}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="10" width="50" height="15" uuid="53d53c1e-38b6-490c-8c83-a5eea2d7b486">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="0367ce44-fe07-4b24-832d-1116f3f9e123"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{tamanho}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="160" y="10" width="50" height="15" uuid="dff57aca-1764-4ac8-acef-900684e8a65a">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="65df36e3-5f4a-4650-9458-4d51e96857da"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{categoria}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="210" y="10" width="150" height="15" uuid="237f6f38-572d-4017-8232-865d918ab4e4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="75064bee-8651-4534-9528-1d92345dfbd5"/>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{descricao}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

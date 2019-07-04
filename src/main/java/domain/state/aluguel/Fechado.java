@@ -41,4 +41,10 @@ public class Fechado extends EstadoAluguel {
 
         private static final Fechado INSTANCE = new Fechado();
     }
+    
+    @Override
+	public String toString() {
+		return "Fechado";
+	}
+    
 }

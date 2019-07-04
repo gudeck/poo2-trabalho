@@ -41,5 +41,10 @@ public class NaoRetirado extends EstadoAluguel {
 
         private static final NaoRetirado INSTANCE = new NaoRetirado();
     }
+    
+    @Override
+	public String toString() {
+		return "Não Retirado";
+	}
 
 }

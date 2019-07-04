@@ -1,0 +1,36 @@
+
+ssquid:S1450®"VRemove the "jLabel1" field and declare it as a local variable in the relevant methods.(°ãÉ¸ÿÿÿÿÿ
+msquid:S1450¯"URemove the "jMenu1" field and declare it as a local variable in the relevant methods.(şÚÖ˜
+msquid:S1450°"URemove the "jMenu3" field and declare it as a local variable in the relevant methods.(ƒŞøõ
+usquid:S1450±"XRemove the "jMenuBar1" field and declare it as a local variable in the relevant methods.(úıÁ›ÿÿÿÿÿ
+xsquid:S1450²"[Remove the "jScrollPane1" field and declare it as a local variable in the relevant methods.(¤á×ÿÿÿÿÿ
+nsquid:S1450³"VRemove the "jTable1" field and declare it as a local variable in the relevant methods.(Ğÿ¿×
+squid:S1450´"dRemove the "mniRegistrarDevolucao" field and declare it as a local variable in the relevant methods.(ÒäÅ¢úÿÿÿÿ
+„squid:S1450µ"gRemove the "mniRegistrarManutenÃ§Ã£o" field and declare it as a local variable in the relevant methods.(ãÂ•İøÿÿÿÿ
+squid:S1450¶"bRemove the "mniRegistrarReserva" field and declare it as a local variable in the relevant methods.(ª—›Àüÿÿÿÿ
+{squid:S1450·"cRemove the "mniRegistrarRetirada" field and declare it as a local variable in the relevant methods.(Ï¯´–
+squid:S1450¸"dRemove the "mnuiCadastroCategoria" field and declare it as a local variable in the relevant methods.(ÑÂ±üÿÿÿÿ
+squid:S1450¹"bRemove the "mnuiCadastroCliente" field and declare it as a local variable in the relevant methods.(…‡±áıÿÿÿÿ
+zsquid:S1450º"bRemove the "mnuiCadastroProduto" field and declare it as a local variable in the relevant methods.(³æ´‚
+gsquid:S00100¥"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ßö­£
+Bsquid:S1172‘"*Remove this unused method parameter "evt".(¶Õº®
+Asquid:S1172•"*Remove this unused method parameter "evt".(ª¨ÚF
+Gsquid:S1172™"*Remove this unused method parameter "evt".(»ˆ¼ıüÿÿÿÿ
+Asquid:S1172"*Remove this unused method parameter "evt".(Â…Õw
+Bsquid:S1172¡"*Remove this unused method parameter "evt".(ŞŸ°Å
+Bsquid:S1172¥"*Remove this unused method parameter "evt".(ßö­£
+Bsquid:S1172©"*Remove this unused method parameter "evt".(îÙÅğ
+?squid:S1604M"(Make this anonymous inner class a lambda(Ä±›Ì
+>squid:S1604U"(Make this anonymous inner class a lambda(‹‹¼3
+?squid:S1604]"(Make this anonymous inner class a lambda(€Û¦
+Dsquid:S1604i"(Make this anonymous inner class a lambda(²İ„÷ıÿÿÿÿ
+Dsquid:S1604q"(Make this anonymous inner class a lambda(ÙâçŠûÿÿÿÿ
+Dsquid:S1604y"(Make this anonymous inner class a lambda(Å†ëúøÿÿÿÿ
+@squid:S1604"(Make this anonymous inner class a lambda(ØÉÿ
+squid:S00116µ"cRename this field "mniRegistrarManutenÃ§Ã£o" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ãÂ•İøÿÿÿÿ
+^squid:UselessImportCheck":Remove this unused import 'java.awt.event.ActionListener'.(Ìä¹
+Vsquid:UselessImportCheck
+"2Remove this unused import 'javax.swing.JMenuItem'.(Â¶³‰
+Wsquid:UselessImportCheck	".Remove this unused import 'javax.swing.JMenu'.(×‹áùÿÿÿÿ
+[squid:UselessImportCheck"7Remove this unused import 'java.awt.event.ActionEvent'.(Úù“‘
+jsquid:MaximumInheritanceDepth"<This class has 6 parents which is greater than 5 authorized.(¯€õ¬ÿÿÿÿÿ

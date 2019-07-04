@@ -8,6 +8,8 @@ package domain;
 import domain.state.produto.EstadoProduto;
 
 import javax.persistence.*;
+
+
 import java.io.Serializable;
 
 /**
