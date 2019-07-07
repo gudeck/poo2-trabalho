@@ -19,33 +19,26 @@
     </properties>
     <dependencies>
         
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <!--https://mvnrepository.com/artifact/org.hibernate/hibernate-core--> 
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>5.4.3.Final</version>
         </dependency>
 
-        <!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+        <!--https://mvnrepository.com/artifact/mysql/mysql-connector-java--> 
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.16</version>
         </dependency>
         
-        <!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports -->
+        <!--https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports--> 
         <dependency>
             <groupId>net.sf.jasperreports</groupId>
             <artifactId>jasperreports</artifactId>
-            <version>6.8.1</version>
+            <version>6.9.0</version>
         </dependency>
-
-        <!--        &lt;!&ndash; https://mvnrepository.com/artifact/com.jaspersoft/ireport &ndash;&gt;-->
-        <!--        <dependency>-->
-        <!--            <groupId>com.jaspersoft</groupId>-->
-        <!--            <artifactId>ireport</artifactId>-->
-        <!--            <version>3.7.5</version>-->
-        <!--        </dependency>-->
         
     </dependencies>
 </project>

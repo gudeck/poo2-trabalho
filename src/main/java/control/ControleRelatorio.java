@@ -12,8 +12,6 @@ import java.util.Map;
 import javax.swing.JOptionPane;
 
 import dao.GenericDAO;
-import domain.Aluguel;
-import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -38,42 +36,29 @@ class ControleRelatorio {
         return UNIQUEINSTANCE;
     }
 
-    void relatorioAlugueis() {
+    void relatorio(String nomeArquivo, Class classe) {
         try {
-            // PASSO 1 - Caminho do relatório
-            InputStream rel = getClass().getResourceAsStream("../report/RelatorioAlugueis.jasper");
+            String caminho = "../relatorios/" + nomeArquivo + ".jasper";
 
-            // PASSO 2 - Criar parâmetros de Pesquisa 
+            InputStream relatorio = getClass().getResourceAsStream(caminho);
             Map parametros = new HashMap();
+            JRBeanCollectionDataSource dados = new JRBeanCollectionDataSource(genericDao.read(classe));
 
-            // PASSO 3 - Carregar o relatório com os dados
-            JRBeanCollectionDataSource dados = new JRBeanCollectionDataSource(genericDao.read(Aluguel.class));
             JasperPrint print;
-            print = JasperFillManager.fillReport(rel,
-                    parametros,
-                    dados);
+            print = JasperFillManager.fillReport(relatorio, parametros, dados);
 
             if (print.getPages().size() > 0) {
-                // PASSO 4 - Mostrat em uma JANELA
 
-                // Cria o JasperViewer
-                JasperViewer jrViewer = new JasperViewer(print, false);
-                jrViewer.setVisible(true);
+                JasperViewer mostrarRelatorio = new JasperViewer(print, false);
+                mostrarRelatorio.setVisible(true);
 
-                // Criar uma janela MODAL e colocar o JasperView dentro dela
-//                JDialog viewer = new JDialog(new javax.swing.JFrame(), "Visualização do Relatório", true);
-//                viewer.setSize(800, 600);
-//                viewer.setLocationRelativeTo(null);
-//                viewer.getContentPane().add(jrViewer.getContentPane());
-//                viewer.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, "Relatório de clientes vazio.");
+                JOptionPane.showMessageDialog(null, "Relatório vazio.");
             }
 
-        } catch (JRException erro) {
-            JOptionPane.showMessageDialog(null, "ERRO ao abrir relatório de clientes. " + erro.getMessage());
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, "ERRO ao abrir relatório. " + erro);
 
         }
-
     }
 }

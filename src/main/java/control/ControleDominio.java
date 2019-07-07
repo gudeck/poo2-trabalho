@@ -208,7 +208,7 @@ public class ControleDominio {
 
         aluguel.setProdutosAlugados(listaProdutos);
         cliente.getAlugueis().add(aluguel);
-        
+
         genericDao.createUpdate(aluguel);
         genericDao.createUpdate(cliente);
     }

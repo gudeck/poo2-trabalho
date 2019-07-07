@@ -150,8 +150,8 @@ public class ControleVisao {
 
     }
 
-	public void relatorioAlugueis() {
-		relatorioCtlr.relatorioAlugueis();
-	}
+    public void relatorio(String nomeArquivo, Class classe) {
+        relatorioCtlr.relatorio(nomeArquivo, classe);
+    }
 
 }
