@@ -36,12 +36,12 @@ class ControleRelatorio {
         return UNIQUEINSTANCE;
     }
 
-    void relatorio(String nomeArquivo, Class classe) {
+    void relatorio(String nomeArquivo, Class<?> classe) {
         try {
-            String caminho = "../relatorios/" + nomeArquivo + ".jasper";
+            String caminho = "../report/" + nomeArquivo + ".jasper";
 
             InputStream relatorio = getClass().getResourceAsStream(caminho);
-            Map parametros = new HashMap();
+            Map<String, Object> parametros = new HashMap<String, Object>();
             JRBeanCollectionDataSource dados = new JRBeanCollectionDataSource(genericDao.read(classe));
 
             JasperPrint print;
@@ -57,7 +57,7 @@ class ControleRelatorio {
             }
 
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(null, "ERRO ao abrir relatório. " + erro);
+            JOptionPane.showMessageDialog(null, "ERRO ao abrir relatório: " + erro);
 
         }
     }
